@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd" version="2.1">
+
+  <persistence-unit name="canvas" transaction-type="JTA">
+
+    <!-- <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider> -->
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <jta-data-source>osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=canvasJTA)</jta-data-source>
+    <non-jta-data-source>osgi:service/javax.sql.DataSource/(osgi.jndi.service.name=canvasNoJTA)</non-jta-data-source>
+
+    <class>org.renci.canvas.dao.annotation.model.AnnotationCodingSequence</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationCodingSequenceExternalId</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationCodingSequenceExternalIdPK</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationGene</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationGeneExternalId</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationGeneExternalIdPK</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationGeneSynonym</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationGeneSynonymPK</class>
+    <class>org.renci.canvas.dao.annotation.model.AnnotationTranscriptionMapWarnings</class>
+    <class>org.renci.canvas.dao.clinbin.model.AnalysisClass</class>
+    <class>org.renci.canvas.dao.clinbin.model.AnalysisClassIncidental</class>
+    <class>org.renci.canvas.dao.clinbin.model.AnalysisNote</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinGeneSymbol</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinGeneSymbolPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalDiagnostic</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalDiagnosticPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalIncidental</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalIncidentalPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalIncidentalX</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalIncidentalXPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalRiskX</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinResultsFinalRiskXPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.BinningJob</class>
+    <class>org.renci.canvas.dao.clinbin.model.CarrierStatus</class>
+    <class>org.renci.canvas.dao.clinbin.model.ClinBinStatusType</class>
+    <class>org.renci.canvas.dao.clinbin.model.ConfirmedTracking</class>
+    <class>org.renci.canvas.dao.clinbin.model.DX</class>
+    <class>org.renci.canvas.dao.clinbin.model.DXCoverage</class>
+    <class>org.renci.canvas.dao.clinbin.model.DXCoveragePK</class>
+    <class>org.renci.canvas.dao.clinbin.model.DXExons</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticBinResults</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticBinResultsPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticBinningJob</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticGene</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticGeneGroupVersion</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticGeneGroupVersionPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticResultVersion</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiagnosticStatusType</class>
+    <class>org.renci.canvas.dao.clinbin.model.DiseaseClass</class>
+    <class>org.renci.canvas.dao.clinbin.model.HaplotypeX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBin</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGene</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGenePK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGeneX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGeneXPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGroupVersion</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGroupVersionPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGroupVersionX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinGroupVersionXPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinHaplotypeX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinHaplotypeXPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinResults</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinResultsPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinType</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalBinningJob</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalResultVersion</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalResultVersionX</class>
+    <class>org.renci.canvas.dao.clinbin.model.IncidentalStatusType</class>
+    <class>org.renci.canvas.dao.clinbin.model.MaxFrequency</class>
+    <class>org.renci.canvas.dao.clinbin.model.MaxFrequencyPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.MaxFrequencySource</class>
+    <class>org.renci.canvas.dao.clinbin.model.MissingHaplotype</class>
+    <class>org.renci.canvas.dao.clinbin.model.MissingHaplotypePK</class>
+    <class>org.renci.canvas.dao.clinbin.model.NCGenesFrequencies</class>
+    <class>org.renci.canvas.dao.clinbin.model.NCGenesFrequenciesPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.PhenotypeX</class>
+    <class>org.renci.canvas.dao.clinbin.model.Report</class>
+    <class>org.renci.canvas.dao.clinbin.model.ReportPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.RsVariants</class>
+    <class>org.renci.canvas.dao.clinbin.model.RsVariantsPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.UnimportantExon</class>
+    <class>org.renci.canvas.dao.clinbin.model.UnimportantExonPK</class>
+    <class>org.renci.canvas.dao.clinbin.model.UnimportantFeature</class>
+    <class>org.renci.canvas.dao.clinbin.model.UnimportantFeaturePK</class>
+    <class>org.renci.canvas.dao.clinbin.model.ZygosityModeType</class>
+    <class>org.renci.canvas.dao.clinvar.model.AssertionRanking</class>
+    <class>org.renci.canvas.dao.clinvar.model.AssertionRankingPK</class>
+    <class>org.renci.canvas.dao.clinvar.model.ReferenceClinicalAssertion</class>
+    <class>org.renci.canvas.dao.clinvar.model.SubmissionClinicalAssertion</class>
+    <class>org.renci.canvas.dao.clinvar.model.TraitSet</class>
+    <class>org.renci.canvas.dao.clinvar.model.Trait</class>
+    <class>org.renci.canvas.dao.clinvar.model.ClinVarVersion</class>
+    <class>org.renci.canvas.dao.dbsnp.model.MappingWarning</class>
+    <class>org.renci.canvas.dao.dbsnp.model.RSMappingT</class>
+    <class>org.renci.canvas.dao.dbsnp.model.RSMappingTPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNP</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPAllele</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPAlleleFrequency</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPAlleleFrequencyPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPAllelePK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPGenotypeFrequency</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPGenotypeFrequencyPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPHWProb</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPHWProbPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMapping</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMappingAgg</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMappingAggPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMappingPK</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMappingWarning</class>
+    <class>org.renci.canvas.dao.dbsnp.model.SNPMappingWarningPK</class>
+    <class>org.renci.canvas.dao.esp.model.ESPSNPFrequencyPopulation</class>
+    <class>org.renci.canvas.dao.esp.model.ESPSNPFrequencyPopulationPK</class>
+    <class>org.renci.canvas.dao.exac.model.ExACMaxVariantFrequency</class>
+    <class>org.renci.canvas.dao.exac.model.ExACMaxVariantFrequencyPK</class>
+    <class>org.renci.canvas.dao.exac.model.ExACVariantFrequency</class>
+    <class>org.renci.canvas.dao.exac.model.ExACVariantFrequencyPK</class>
+    <class>org.renci.canvas.dao.gnomad.model.GnomADMaxVariantFrequency</class>
+    <class>org.renci.canvas.dao.gnomad.model.GnomADMaxVariantFrequencyPK</class>
+    <class>org.renci.canvas.dao.gnomad.model.GnomADVariantFrequency</class>
+    <class>org.renci.canvas.dao.gnomad.model.GnomADVariantFrequencyPK</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesIndelMaxFrequency</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesIndelMaxFrequencyPK</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesIndelFrequency</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesIndelFrequencyPK</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPFrequencyPopulation</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPFrequencyPopulationPK</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPFrequencySubpopulation</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPFrequencySubpopulationPK</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPPopulationMaxFrequency</class>
+    <class>org.renci.canvas.dao.onekgen.model.OneKGenomesSNPPopulationMaxFrequencyPK</class>
+    <class>org.renci.canvas.dao.hgmd.model.HGMDLocatedVariant</class>
+    <class>org.renci.canvas.dao.hgmd.model.HGMDLocatedVariantPK</class>
+    <class>org.renci.canvas.dao.hgnc.model.HGNCGene</class>
+    <class>org.renci.canvas.dao.hgnc.model.HGNCStatusType</class>
+    <class>org.renci.canvas.dao.hgnc.model.LocusGroup</class>
+    <class>org.renci.canvas.dao.hgnc.model.LocusType</class>
+    <class>org.renci.canvas.dao.omim.model.OMIMGene</class>
+    <class>org.renci.canvas.dao.omim.model.Otype</class>
+    <class>org.renci.canvas.dao.omim.model.Phenotype</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRef</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRefSeq</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRefSeqAlternateId</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRefSeqAlternateIdPK</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRefSeqLocation</class>
+    <class>org.renci.canvas.dao.ref.model.GenomeRefSeqLocationPK</class>
+    <class>org.renci.canvas.dao.ref.model.SequenceType</class>
+    <class>org.renci.canvas.dao.refseq.model.CDSECNumber</class>
+    <class>org.renci.canvas.dao.refseq.model.CDSECNumberPK</class>
+    <class>org.renci.canvas.dao.refseq.model.CDSTranslationException</class>
+    <class>org.renci.canvas.dao.refseq.model.CDSTranslationExceptionPK</class>
+    <class>org.renci.canvas.dao.refseq.model.Feature</class>
+    <class>org.renci.canvas.dao.refseq.model.FeatureType</class>
+    <class>org.renci.canvas.dao.refseq.model.FeatureQualifiers</class>
+    <class>org.renci.canvas.dao.refseq.model.FeatureQualifiersPK</class>
+    <class>org.renci.canvas.dao.refseq.model.GroupingType</class>
+    <class>org.renci.canvas.dao.refseq.model.LocationType</class>
+    <class>org.renci.canvas.dao.refseq.model.RefSeqCodingSequence</class>
+    <class>org.renci.canvas.dao.refseq.model.RefSeqGene</class>
+    <class>org.renci.canvas.dao.refseq.model.RegionGroup</class>
+    <class>org.renci.canvas.dao.refseq.model.RegionGroupRegion</class>
+    <class>org.renci.canvas.dao.refseq.model.RegionGroupRegionPK</class>
+    <class>org.renci.canvas.dao.refseq.model.Transcript</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptMaps</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptMapsExons</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptMapsExonsPK</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptMapsWarnings</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptMapsWarningsPK</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptRefSeqVersion</class>
+    <class>org.renci.canvas.dao.refseq.model.TranscriptRefSeqVersionPK</class>
+    <class>org.renci.canvas.dao.refseq.model.VariantEffect</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_48_2</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_48_2PK</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_61_2</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_61_2PK</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_80_4</class>
+    <class>org.renci.canvas.dao.refseq.model.Variants_80_4PK</class>
+    <class>org.renci.canvas.dao.var.model.Assembly</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocatedVariant</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocatedVariantPK</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocatedVariantQC</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocatedVariantQCPK</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocation</class>
+    <class>org.renci.canvas.dao.var.model.AssemblyLocationPK</class>
+    <class>org.renci.canvas.dao.var.model.CanonicalAllele</class>
+    <class>org.renci.canvas.dao.var.model.Lab</class>
+    <class>org.renci.canvas.dao.var.model.Library</class>
+    <class>org.renci.canvas.dao.var.model.LocatedVariant</class>
+    <class>org.renci.canvas.dao.var.model.Project</class>
+    <class>org.renci.canvas.dao.var.model.Sample</class>
+    <class>org.renci.canvas.dao.var.model.VariantSet</class>
+    <class>org.renci.canvas.dao.var.model.VariantSetLoad</class>
+    <class>org.renci.canvas.dao.var.model.VariantSetLocation</class>
+    <class>org.renci.canvas.dao.var.model.VariantSetLocationPK</class>
+    <class>org.renci.canvas.dao.var.model.VariantType</class>
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+    <validation-mode>AUTO</validation-mode>
+
+    <properties>
+      <property name="javax.persistence.query.timeout" value="300000" />
+      <property name="hibernate.enable_lazy_load_no_trans" value="true" />
+      <property name="hibernate.hbm2ddl.auto" value="validate" />
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+      <property name="hibernate.query.jpaql_strict_compliance" value="true" />
+      <property name="hibernate.format_sql" value="true" />
+      <property name="hibernate.use_sql_comments" value="false" />
+      <property name="hibernate.jdbc.batch_size" value="100" />
+      <property name="hibernate.order_inserts" value="true" />
+      <property name="hibernate.order_updates" value="true" />
+      <property name="hibernate.jdbc.batch_versioned_data" value="true" />
+      <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+      <property name="hibernate.cache.use_second_level_cache" value="false" />
+      <property name="hibernate.cache.use_query_cache" value="false" />
+    </properties>
+
+  </persistence-unit>
+</persistence>

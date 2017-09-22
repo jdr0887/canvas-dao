@@ -46,6 +46,11 @@ public class LocatedVariantFactory {
                 return null;
             }
 
+            if (ref.equals(alt)) {
+                logger.error("ref and alt are equal");
+                return null;
+            }
+
             List<Character> referenceChars = ref.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
             List<Character> alternateChars = alt.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
 
@@ -190,7 +195,8 @@ public class LocatedVariantFactory {
                     locatedVariant.setSeq(ref);
                 } else {
                     locatedVariant.setVariantType(sub);
-                    locatedVariant.setPosition(variantContext.getStart());
+                    locatedVariant
+                            .setPosition(variantContext.getStart() - 1 + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
                     locatedVariant.setRef(ref);
                     locatedVariant.setSeq(alt);
                     locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
@@ -198,17 +204,27 @@ public class LocatedVariantFactory {
 
             } else if (ref.length() < alt.length()) {
 
-                locatedVariant.setVariantType(ins);
-                locatedVariant
-                        .setPosition(variantContext.getStart() - 1 + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
-                locatedVariant.setEndPosition(locatedVariant.getPosition() + 1);
-                locatedVariant.setRef("");
-                locatedVariant.setSeq(alt);
+                if (ref.length() == 0) {
+                    locatedVariant.setVariantType(ins);
+                    locatedVariant
+                            .setPosition(variantContext.getStart() - 1 + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
+                    locatedVariant.setEndPosition(locatedVariant.getPosition() + 1);
+                    locatedVariant.setRef("");
+                    locatedVariant.setSeq(alt);
+                } else {
+                    locatedVariant.setVariantType(sub);
+                    locatedVariant
+                            .setPosition(variantContext.getStart() - 1 + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
+                    locatedVariant.setRef(ref);
+                    locatedVariant.setSeq(alt);
+                    locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
+                }
 
             } else if (ref.length() == alt.length()) {
 
                 locatedVariant.setVariantType(sub);
-                locatedVariant.setPosition(variantContext.getStart());
+                locatedVariant
+                        .setPosition(variantContext.getStart() - 1 + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
                 locatedVariant.setRef(ref);
                 locatedVariant.setSeq(alt);
                 locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
@@ -246,6 +262,11 @@ public class LocatedVariantFactory {
             return null;
         }
 
+        if (ref.equals(alt)) {
+            logger.error("ref and alt are equal");
+            return null;
+        }
+
         LocatedVariant locatedVariant = new LocatedVariant(genomeRef, genomeRefSeq);
 
         locatedVariant.setVariantType(delVariantType);
@@ -257,6 +278,7 @@ public class LocatedVariantFactory {
         if (referenceChars.size() > 1 && alternateChars.size() > 1) {
 
             StringBuilder frontChars2Remove = new StringBuilder();
+            StringBuilder backChars2Remove = new StringBuilder();
 
             for (int i = 0; i < referenceChars.size(); ++i) {
                 if (i == alternateChars.size() || referenceChars.get(i) != alternateChars.get(i)) {
@@ -265,8 +287,35 @@ public class LocatedVariantFactory {
                 frontChars2Remove.append(referenceChars.get(i));
             }
 
+            if (CollectionUtils.isNotEmpty(referenceChars) && CollectionUtils.isNotEmpty(alternateChars)) {
+
+                String tmpRef = referenceChars.stream().map(a -> a.toString()).collect(Collectors.joining());
+                tmpRef = tmpRef.replaceFirst(frontChars2Remove.toString(), "");
+                referenceChars = tmpRef.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+
+                String tmpAlt = alternateChars.stream().map(a -> a.toString()).collect(Collectors.joining());
+                tmpAlt = tmpAlt.replaceFirst(frontChars2Remove.toString(), "");
+                alternateChars = tmpAlt.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+
+                Collections.reverse(referenceChars);
+                Collections.reverse(alternateChars);
+                for (int i = 0; i < referenceChars.size(); ++i) {
+                    if (i == alternateChars.size() || referenceChars.get(i) != alternateChars.get(i)) {
+                        break;
+                    }
+                    backChars2Remove.append(referenceChars.get(i));
+                }
+            }
+
             if (frontChars2Remove.length() > 0) {
                 ref = ref.replaceFirst(frontChars2Remove.toString(), "");
+                alt = alt.replaceFirst(frontChars2Remove.toString(), "");
+            }
+
+            if (backChars2Remove.length() > 0) {
+                backChars2Remove.reverse();
+                ref = StringUtils.removeEnd(ref, backChars2Remove.toString());
+                alt = StringUtils.removeEnd(alt, backChars2Remove.toString());
             }
 
             locatedVariant.setPosition(position + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0));
@@ -290,6 +339,11 @@ public class LocatedVariantFactory {
 
         if (StringUtils.isEmpty(alt)) {
             logger.error("alt is empty");
+            return null;
+        }
+
+        if (ref.equals(alt)) {
+            logger.error("ref and alt are equal");
             return null;
         }
 

@@ -253,8 +253,8 @@ public class LocatedVariant implements Persistable<Long> {
 
     @Override
     public String toString() {
-        return String.format("LocatedVariant [id=%s, position=%s, ref=%s, endPosition=%s, seq=%s, variantType=%s]", id, position, ref,
-                endPosition, seq, variantType != null ? variantType.toString() : "");
+        return String.format("LocatedVariant [id=%s, position=%s, endPosition=%s, ref=%s, seq=%s, variantType=%s]", id, position,
+                endPosition, ref, seq, variantType != null ? variantType.toString() : "");
     }
 
     public Range<Integer> toRange() {

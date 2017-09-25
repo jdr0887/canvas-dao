@@ -18,6 +18,10 @@ public interface LocatedVariantDAO extends BaseDAO<LocatedVariant, Long> {
 
     public List<LocatedVariant> findByCanonicalAlleleId(Integer canonicalAlleleId) throws CANVASDAOException;
 
+    public List<Long> findIdByGenomeRefIdAndVariantType(Integer genomeRefId, String variantType) throws CANVASDAOException;
+
+    public List<LocatedVariant> findBad(Integer genomeRefId) throws CANVASDAOException;
+
     public void delete(LocatedVariant entity) throws CANVASDAOException;
 
     public List<LocatedVariant> findByVersionAccessionAndRefId(String verAccession, Integer genomeRefId) throws CANVASDAOException;

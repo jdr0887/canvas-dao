@@ -72,7 +72,6 @@ public class LocatedVariantTest {
         VariantTypeDAOImpl variantTypeDAO = new VariantTypeDAOImpl();
         variantTypeDAO.setEntityManager(em);
 
-        
         LocatedVariant locatedVariant = new LocatedVariant(genomeRefDAO.findById(4), genomeRefSeqDAO.findById("NC_000005.10"));
         locatedVariant.setVariantType(variantTypeDAO.findById("snp"));
         locatedVariant.setPosition(13841077);
@@ -105,6 +104,18 @@ public class LocatedVariantTest {
         em.getTransaction().begin();
         locatedVariantDAO.save(locatedVariant);
         em.getTransaction().commit();
+
+    }
+
+    @Test
+    public void testFindBad() throws CANVASDAOException {
+        LocatedVariantDAOImpl locatedVariantDAO = new LocatedVariantDAOImpl();
+        locatedVariantDAO.setEntityManager(em);
+
+        List<LocatedVariant> foundLocatedVariants = locatedVariantDAO.findBad(2);
+        for (LocatedVariant locatedVariant : foundLocatedVariants) {
+            System.out.println(locatedVariant.toString());
+        }
 
     }
 

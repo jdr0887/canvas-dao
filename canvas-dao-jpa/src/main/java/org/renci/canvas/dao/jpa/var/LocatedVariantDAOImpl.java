@@ -229,6 +229,48 @@ public class LocatedVariantDAOImpl extends BaseDAOImpl<LocatedVariant, Long> imp
         return ret;
     }
 
+    @Override
+    public List<LocatedVariant> findBad(Integer genomeRefId) throws CANVASDAOException {
+        logger.debug("ENTERING findByCanonicalAlleleId(Integer)");
+        List<LocatedVariant> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<LocatedVariant> crit = critBuilder.createQuery(getPersistentClass());
+            Root<LocatedVariant> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(LocatedVariant_.genomeRef).get(GenomeRef_.id), genomeRefId));
+            predicates.add(critBuilder.equal(root.get(LocatedVariant_.seq), root.get(LocatedVariant_.ref)));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<LocatedVariant> query = getEntityManager().createQuery(crit).setHint("javax.persistence.fetchgraph",
+                    getEntityManager().getEntityGraph("var.LocatedVariant.includeManyToOnes"));
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Long> findIdByGenomeRefIdAndVariantType(Integer genomeRefId, String variantType) throws CANVASDAOException {
+        logger.debug("ENTERING findIdByGenomeRefIdAndVariantType(Integer, String)");
+        List<Long> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Long> crit = critBuilder.createQuery(Long.class);
+            Root<LocatedVariant> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(LocatedVariant_.genomeRef).get(GenomeRef_.id), genomeRefId));
+            predicates.add(critBuilder.equal(root.join(LocatedVariant_.variantType).get(VariantType_.id), variantType));
+            crit.select(critBuilder.countDistinct(root.get(LocatedVariant_.id)));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<Long> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
     @org.springframework.transaction.annotation.Transactional
     @javax.transaction.Transactional
     @Override

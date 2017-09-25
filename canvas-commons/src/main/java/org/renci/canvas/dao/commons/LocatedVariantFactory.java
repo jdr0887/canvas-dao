@@ -55,45 +55,29 @@ public class LocatedVariantFactory {
                 locatedVariant.setPosition(pos);
                 locatedVariant.setEndPosition(pos + locatedVariant.getRef().length());
 
-            } else if (ref.length() > alt.length()) {
+            } else if (alt.length() == 0) {
 
-                if (alt.length() == 0) {
-                    locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("del")).findAny().get());
-                    locatedVariant.setRef(ref);
-                    locatedVariant.setSeq(ref);
-                    locatedVariant.setPosition(pos);
-                    locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
-                } else {
-                    locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("sub")).findAny().get());
-                    locatedVariant.setRef(ref);
-                    locatedVariant.setSeq(alt);
-                    locatedVariant.setPosition(pos);
-                    locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
-                }
+                locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("del")).findAny().get());
+                locatedVariant.setRef(ref);
+                locatedVariant.setSeq(ref);
+                locatedVariant.setPosition(pos);
+                locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
 
-            } else if (ref.length() < alt.length()) {
+            } else if (ref.length() == 0) {
 
-                if (ref.length() == 0) {
-                    locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("ins")).findAny().get());
-                    locatedVariant.setRef("");
-                    locatedVariant.setSeq(alt);
-                    locatedVariant.setPosition(pos - 1);
-                    locatedVariant.setEndPosition(locatedVariant.getPosition() + 1);
-                } else {
-                    locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("sub")).findAny().get());
-                    locatedVariant.setRef(ref);
-                    locatedVariant.setSeq(alt);
-                    locatedVariant.setPosition(pos);
-                    locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
-                }
+                locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("ins")).findAny().get());
+                locatedVariant.setRef("");
+                locatedVariant.setSeq(alt);
+                locatedVariant.setPosition(pos - 1);
+                locatedVariant.setEndPosition(locatedVariant.getPosition() + 1);
 
-            } else if (ref.length() == alt.length()) {
+            } else {
 
                 locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("sub")).findAny().get());
                 locatedVariant.setRef(ref);
                 locatedVariant.setSeq(alternate);
                 locatedVariant.setPosition(pos);
-                locatedVariant.setEndPosition(locatedVariant.getPosition() + reference.length());
+                locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
 
             }
 

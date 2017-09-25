@@ -28,7 +28,10 @@ public class LocatedVariantFactoryTest {
 
     @Test
     public void testCreateSNP() {
-        LocatedVariant locVar = LocatedVariantFactory.createSNP(null, null, new VariantType("snp"), "G", "C", 13273);
+        GenomeRef genomeRef = null;
+        GenomeRefSeq genomeRefSeq = null;
+        LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 13273, "G", "C",
+                Arrays.asList(new VariantType("snp")));
         logger.info(locVar.toString());
         assertTrue(locVar.getEndPosition().equals(13274));
     }
@@ -46,8 +49,8 @@ public class LocatedVariantFactoryTest {
             for (VariantContext variantContext : vcfFileReader) {
 
                 List<Allele> altAllele = variantContext.getAlternateAlleles();
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext, altAllele.get(0),
-                        allVariantTypes);
+                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
                 locatedVariantList.add(locVar);
 
             }
@@ -58,8 +61,8 @@ public class LocatedVariantFactoryTest {
             for (VariantContext variantContext : vcfFileReader) {
 
                 List<Allele> altAllele = variantContext.getAlternateAlleles();
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext, altAllele.get(0),
-                        allVariantTypes);
+                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
                 locatedVariantList.add(locVar);
 
             }
@@ -85,8 +88,8 @@ public class LocatedVariantFactoryTest {
 
                 List<Allele> altAllele = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext, altAllele.get(0),
-                        allVariantTypes);
+                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
                 locatedVariantList.add(locVar);
 
             }
@@ -111,8 +114,8 @@ public class LocatedVariantFactoryTest {
 
                 List<Allele> altAllele = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext, altAllele.get(0),
-                        allVariantTypes);
+                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
                 locatedVariantList.add(locVar);
 
             }
@@ -137,8 +140,8 @@ public class LocatedVariantFactoryTest {
 
                 List<Allele> altAllele = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext, altAllele.get(0),
-                        allVariantTypes);
+                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
                 locatedVariantList.add(locVar);
 
             }
@@ -152,18 +155,20 @@ public class LocatedVariantFactoryTest {
     public void testCreateInsertion() throws Exception {
         GenomeRef genomeRef = null;
         GenomeRefSeq genomeRefSeq = null;
-        LocatedVariant locVar = LocatedVariantFactory.createInsertion(genomeRef, genomeRefSeq, new VariantType("ins"), "CAGAGA",
-                "CAGAGAGAGA", 1891654);
+        LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 1891654, "CAGAGA", "CAGAGAGAGA",
+                Arrays.asList(new VariantType("ins")));
         logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("ins"));
     }
 
     @Test
     public void testCreateDeletion() throws Exception {
         GenomeRef genomeRef = null;
         GenomeRefSeq genomeRefSeq = null;
-        LocatedVariant locVar = LocatedVariantFactory.createDeletion(genomeRef, genomeRefSeq, new VariantType("del"), "CAGAAGAA", "CAGAA",
-                3021843);
+        LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 3021843, "CAGAAGAA", "CAGAA",
+                Arrays.asList(new VariantType("del")));
         logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("del"));
     }
 
 }

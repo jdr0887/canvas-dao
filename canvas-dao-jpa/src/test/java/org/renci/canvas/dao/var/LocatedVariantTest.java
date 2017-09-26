@@ -120,6 +120,18 @@ public class LocatedVariantTest {
     }
 
     @Test
+    public void testFindIdByGenomeRefIdAndVariantType() throws CANVASDAOException {
+        LocatedVariantDAOImpl locatedVariantDAO = new LocatedVariantDAOImpl();
+        locatedVariantDAO.setEntityManager(em);
+
+        List<Long> foundLocatedVariantIds = locatedVariantDAO.findIdByGenomeRefIdAndVariantType(2, "del");
+        for (Long locatedVariantId : foundLocatedVariantIds) {
+            System.out.println(locatedVariantId.toString());
+        }
+
+    }
+
+    @Test
     public void testIncrementable() throws CANVASDAOException {
         LocatedVariantDAOImpl locatedVariantDAO = new LocatedVariantDAOImpl();
         locatedVariantDAO.setEntityManager(em);

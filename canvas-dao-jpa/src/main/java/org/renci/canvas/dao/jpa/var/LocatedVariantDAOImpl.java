@@ -242,8 +242,7 @@ public class LocatedVariantDAOImpl extends BaseDAOImpl<LocatedVariant, Long> imp
             predicates.add(critBuilder.equal(root.get(LocatedVariant_.seq), root.get(LocatedVariant_.ref)));
             predicates.add(root.join(LocatedVariant_.variantType).get(VariantType_.id).in(Arrays.asList("snp", "sub")));
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
-            TypedQuery<LocatedVariant> query = getEntityManager().createQuery(crit).setHint("javax.persistence.fetchgraph",
-                    getEntityManager().getEntityGraph("var.LocatedVariant.includeManyToOnes"));
+            TypedQuery<LocatedVariant> query = getEntityManager().createQuery(crit);
             ret.addAll(query.getResultList());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

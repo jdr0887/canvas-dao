@@ -1,0 +1,13 @@
+org.renci.canvas.dao
+org.renci.canvas.dao.annotation
+org.renci.canvas.dao.clinbin
+org.renci.canvas.dao.clinvar
+org.renci.canvas.dao.commons
+org.renci.canvas.dao.dbsnp
+org.renci.canvas.dao.exac
+org.renci.canvas.dao.gnomad
+org.renci.canvas.dao.hgnc
+org.renci.canvas.dao.onekgen
+org.renci.canvas.dao.ref
+org.renci.canvas.dao.refseq
+org.renci.canvas.dao.var

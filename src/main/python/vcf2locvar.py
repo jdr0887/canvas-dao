@@ -38,4 +38,4 @@ for line in sys.stdin:
             vartype = 'del'
             # weirdness
             alt = ref
-        print "\t".join([str(x) for x in (chrom, orig_pos, orig_ref, orig_alt, vartype, pos, end_pos, ref, alt)])
+        print "\t".join([str(x) for x in (pos, end_pos, ref, alt, vartype)])

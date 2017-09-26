@@ -3,6 +3,7 @@ package org.renci.canvas.dao.commons;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,28 +49,73 @@ public class LocatedVariantFactoryTest {
         try (VCFFileReader vcfFileReader = new VCFFileReader(f, false)) {
             for (VariantContext variantContext : vcfFileReader) {
 
-                List<Allele> altAllele = variantContext.getAlternateAlleles();
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
-                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
-                locatedVariantList.add(locVar);
+                List<Allele> altAlleleList = variantContext.getAlternateAlleles();
+
+                for (Allele altAllele : altAlleleList) {
+                    LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                            variantContext.getReference().getDisplayString(), altAllele.getDisplayString(), allVariantTypes);
+                    locatedVariantList.add(locVar);
+                }
 
             }
         }
 
-        f = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("mnp.vcf").toURI());
+        File expectedFile = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("complex-expected.txt").toURI());
+        List<String> lines = Files.readAllLines(expectedFile.toPath());
+
+        assertTrue(lines.size() == locatedVariantList.size());
+
+        for (int i = 0; i < locatedVariantList.size(); i++) {
+            String line = lines.get(i);
+            String[] split = line.split("\t");
+            LocatedVariant locatedVariant = locatedVariantList.get(i);
+            assertTrue(locatedVariant.getPosition().equals(Integer.valueOf(split[0])));
+            assertTrue(locatedVariant.getEndPosition().equals(Integer.valueOf(split[1])));
+            assertTrue(locatedVariant.getRef().equals(split[2]));
+            assertTrue(locatedVariant.getSeq().equals(split[3]));
+            assertTrue(locatedVariant.getVariantType().getId().equals(split[4]));
+        }
+
+    }
+
+    @Test
+    public void testMNP() throws Exception {
+
+        GenomeRef genomeRef = null;
+        GenomeRefSeq genomeRefSeq = null;
+
+        List<LocatedVariant> locatedVariantList = new ArrayList<>();
+
+        File f = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("mnp.vcf").toURI());
         try (VCFFileReader vcfFileReader = new VCFFileReader(f, false)) {
             for (VariantContext variantContext : vcfFileReader) {
 
-                List<Allele> altAllele = variantContext.getAlternateAlleles();
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
-                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
-                locatedVariantList.add(locVar);
+                List<Allele> altAlleleList = variantContext.getAlternateAlleles();
+
+                for (Allele altAllele : altAlleleList) {
+                    LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                            variantContext.getReference().getDisplayString(), altAllele.getDisplayString(), allVariantTypes);
+                    locatedVariantList.add(locVar);
+                }
 
             }
         }
 
-        locatedVariantList.forEach(a -> logger.info(a.toString()));
-        locatedVariantList.forEach(a -> assertTrue(a.getVariantType().getId().equals("sub")));
+        File expectedFile = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("mnp-expected.txt").toURI());
+        List<String> lines = Files.readAllLines(expectedFile.toPath());
+
+        assertTrue(lines.size() == locatedVariantList.size());
+
+        for (int i = 0; i < locatedVariantList.size(); i++) {
+            String line = lines.get(i);
+            String[] split = line.split("\t");
+            LocatedVariant locatedVariant = locatedVariantList.get(i);
+            assertTrue(locatedVariant.getPosition().equals(Integer.valueOf(split[0])));
+            assertTrue(locatedVariant.getEndPosition().equals(Integer.valueOf(split[1])));
+            assertTrue(locatedVariant.getRef().equals(split[2]));
+            assertTrue(locatedVariant.getSeq().equals(split[3]));
+            assertTrue(locatedVariant.getVariantType().getId().equals(split[4]));
+        }
 
     }
 
@@ -86,16 +132,32 @@ public class LocatedVariantFactoryTest {
         try (VCFFileReader vcfFileReader = new VCFFileReader(f, false)) {
             for (VariantContext variantContext : vcfFileReader) {
 
-                List<Allele> altAllele = variantContext.getAlternateAlleles();
+                List<Allele> altAlleleList = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
-                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
-                locatedVariantList.add(locVar);
+                for (Allele altAllele : altAlleleList) {
+                    LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                            variantContext.getReference().getDisplayString(), altAllele.getDisplayString(), allVariantTypes);
+                    locatedVariantList.add(locVar);
+                }
 
             }
         }
-        locatedVariantList.forEach(a -> logger.info(a.toString()));
-        locatedVariantList.forEach(a -> assertTrue(a.getVariantType().getId().equals("snp")));
+
+        File expectedFile = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("snp-expected.txt").toURI());
+        List<String> lines = Files.readAllLines(expectedFile.toPath());
+
+        assertTrue(lines.size() == locatedVariantList.size());
+
+        for (int i = 0; i < locatedVariantList.size(); i++) {
+            String line = lines.get(i);
+            String[] split = line.split("\t");
+            LocatedVariant locatedVariant = locatedVariantList.get(i);
+            assertTrue(locatedVariant.getPosition().equals(Integer.valueOf(split[0])));
+            assertTrue(locatedVariant.getEndPosition().equals(Integer.valueOf(split[1])));
+            assertTrue(locatedVariant.getRef().equals(split[2]));
+            assertTrue(locatedVariant.getSeq().equals(split[3]));
+            assertTrue(locatedVariant.getVariantType().getId().equals(split[4]));
+        }
 
     }
 
@@ -112,16 +174,32 @@ public class LocatedVariantFactoryTest {
         try (VCFFileReader vcfFileReader = new VCFFileReader(f, false)) {
             for (VariantContext variantContext : vcfFileReader) {
 
-                List<Allele> altAllele = variantContext.getAlternateAlleles();
+                List<Allele> altAlleleList = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
-                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
-                locatedVariantList.add(locVar);
+                for (Allele altAllele : altAlleleList) {
+                    LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                            variantContext.getReference().getDisplayString(), altAllele.getDisplayString(), allVariantTypes);
+                    locatedVariantList.add(locVar);
+                }
 
             }
         }
-        locatedVariantList.forEach(a -> logger.info(a.toString()));
-        locatedVariantList.forEach(a -> assertTrue(a.getVariantType().getId().equals("del")));
+
+        File expectedFile = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("del-expected.txt").toURI());
+        List<String> lines = Files.readAllLines(expectedFile.toPath());
+
+        assertTrue(lines.size() == locatedVariantList.size());
+
+        for (int i = 0; i < locatedVariantList.size(); i++) {
+            String line = lines.get(i);
+            String[] split = line.split("\t");
+            LocatedVariant locatedVariant = locatedVariantList.get(i);
+            assertTrue(locatedVariant.getPosition().equals(Integer.valueOf(split[0])));
+            assertTrue(locatedVariant.getEndPosition().equals(Integer.valueOf(split[1])));
+            assertTrue(locatedVariant.getRef().equals(split[2]));
+            assertTrue(locatedVariant.getSeq().equals(split[3]));
+            assertTrue(locatedVariant.getVariantType().getId().equals(split[4]));
+        }
 
     }
 
@@ -138,16 +216,32 @@ public class LocatedVariantFactoryTest {
         try (VCFFileReader vcfFileReader = new VCFFileReader(f, false)) {
             for (VariantContext variantContext : vcfFileReader) {
 
-                List<Allele> altAllele = variantContext.getAlternateAlleles();
+                List<Allele> altAlleleList = variantContext.getAlternateAlleles();
 
-                LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
-                        variantContext.getReference().getDisplayString(), altAllele.get(0).getDisplayString(), allVariantTypes);
-                locatedVariantList.add(locVar);
+                for (Allele altAllele : altAlleleList) {
+                    LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, variantContext.getStart(),
+                            variantContext.getReference().getDisplayString(), altAllele.getDisplayString(), allVariantTypes);
+                    locatedVariantList.add(locVar);
+                }
 
             }
         }
-        locatedVariantList.forEach(a -> logger.info(a.toString()));
-        locatedVariantList.forEach(a -> assertTrue(a.getVariantType().getId().equals("ins")));
+
+        File expectedFile = new File(LocatedVariantFactoryTest.class.getClassLoader().getResource("ins-expected.txt").toURI());
+        List<String> lines = Files.readAllLines(expectedFile.toPath());
+
+        assertTrue(lines.size() == locatedVariantList.size());
+
+        for (int i = 0; i < locatedVariantList.size(); i++) {
+            String line = lines.get(i);
+            String[] split = line.split("\t");
+            LocatedVariant locatedVariant = locatedVariantList.get(i);
+            assertTrue(locatedVariant.getPosition().equals(Integer.valueOf(split[0])));
+            assertTrue(locatedVariant.getEndPosition().equals(Integer.valueOf(split[1])));
+            assertTrue(locatedVariant.getRef().equals(split[2]));
+            assertTrue(locatedVariant.getSeq().equals(split[3]));
+            assertTrue(locatedVariant.getVariantType().getId().equals(split[4]));
+        }
 
     }
 

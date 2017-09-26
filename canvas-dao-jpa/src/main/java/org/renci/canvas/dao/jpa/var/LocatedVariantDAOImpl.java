@@ -280,7 +280,8 @@ public class LocatedVariantDAOImpl extends BaseDAOImpl<LocatedVariant, Long> imp
             List<Predicate> predicates = new ArrayList<Predicate>();
             predicates.add(critBuilder.equal(root.join(LocatedVariant_.genomeRef).get(GenomeRef_.id), genomeRefId));
             predicates.add(critBuilder.equal(root.join(LocatedVariant_.variantType).get(VariantType_.id), variantType));
-            crit.select(critBuilder.countDistinct(root.get(LocatedVariant_.id)));
+            crit.select(root.get(LocatedVariant_.id));
+            crit.distinct(true);
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             TypedQuery<Long> query = getEntityManager().createQuery(crit);
             ret.addAll(query.getResultList());

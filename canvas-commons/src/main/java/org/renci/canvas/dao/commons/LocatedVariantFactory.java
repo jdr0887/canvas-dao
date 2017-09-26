@@ -75,7 +75,7 @@ public class LocatedVariantFactory {
 
                 locatedVariant.setVariantType(allVariantTypes.stream().filter(a -> a.getId().equals("sub")).findAny().get());
                 locatedVariant.setRef(ref);
-                locatedVariant.setSeq(alternate);
+                locatedVariant.setSeq(alt);
                 locatedVariant.setPosition(pos);
                 locatedVariant.setEndPosition(locatedVariant.getPosition() + ref.length());
 

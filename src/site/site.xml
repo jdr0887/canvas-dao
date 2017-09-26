@@ -19,6 +19,7 @@
     </menu>
     <menu name="Manual">
       <item name="Building" href="manual/building.html"/>
+      <item name="LocatedVariant Spec" href="manual/locatedVariantSpec.html" />
       <item name="Schema Diagrams" href="manual/schemas.html"/>      
     </menu>    
     <menu ref="reports"/>

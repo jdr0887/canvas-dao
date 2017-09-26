@@ -63,4 +63,24 @@ public class OneKGenomesIndelFrequencyDAOImpl extends BaseDAOImpl<OneKGenomesInd
         return ret;
     }
 
+    @Override
+    public List<OneKGenomesIndelFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<OneKGenomesIndelFrequency> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<OneKGenomesIndelFrequency> crit = critBuilder.createQuery(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            Root<OneKGenomesIndelFrequency> root = crit.from(getPersistentClass());
+            predicates.add(critBuilder.equal(root.join(OneKGenomesIndelFrequency_.locatedVariant).get(LocatedVariant_.id), locVarId));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            crit.distinct(true);
+            TypedQuery<OneKGenomesIndelFrequency> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
 }

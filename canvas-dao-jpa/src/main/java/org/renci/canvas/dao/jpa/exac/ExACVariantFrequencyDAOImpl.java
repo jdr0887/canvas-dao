@@ -28,7 +28,8 @@ import org.springframework.stereotype.Component;
 @OsgiServiceProvider(classes = { ExACVariantFrequencyDAO.class })
 @javax.transaction.Transactional(javax.transaction.Transactional.TxType.SUPPORTS)
 @Singleton
-public class ExACVariantFrequencyDAOImpl extends BaseDAOImpl<ExACVariantFrequency, ExACVariantFrequencyPK> implements ExACVariantFrequencyDAO {
+public class ExACVariantFrequencyDAOImpl extends BaseDAOImpl<ExACVariantFrequency, ExACVariantFrequencyPK>
+        implements ExACVariantFrequencyDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(ExACVariantFrequencyDAOImpl.class);
 
@@ -52,6 +53,26 @@ public class ExACVariantFrequencyDAOImpl extends BaseDAOImpl<ExACVariantFrequenc
             List<Predicate> predicates = new ArrayList<Predicate>();
             predicates.add(critBuilder.equal(root.join(ExACVariantFrequency_.locatedVariant).get(LocatedVariant_.id), locVarId));
             predicates.add(critBuilder.equal(root.get(ExACVariantFrequency_.id).get(ExACVariantFrequencyPK_.version), version));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<ExACVariantFrequency> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    @Override
+    public List<ExACVariantFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<ExACVariantFrequency> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<ExACVariantFrequency> crit = critBuilder.createQuery(getPersistentClass());
+            Root<ExACVariantFrequency> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(ExACVariantFrequency_.locatedVariant).get(LocatedVariant_.id), locVarId));
+            crit.distinct(true);
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             TypedQuery<ExACVariantFrequency> query = getEntityManager().createQuery(crit);
             ret.addAll(query.getResultList());

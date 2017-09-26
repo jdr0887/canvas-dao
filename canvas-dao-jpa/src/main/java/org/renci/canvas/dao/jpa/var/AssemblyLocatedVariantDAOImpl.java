@@ -22,6 +22,7 @@ import org.renci.canvas.dao.var.model.AssemblyLocatedVariant;
 import org.renci.canvas.dao.var.model.AssemblyLocatedVariantPK;
 import org.renci.canvas.dao.var.model.AssemblyLocatedVariant_;
 import org.renci.canvas.dao.var.model.Assembly_;
+import org.renci.canvas.dao.var.model.LocatedVariant_;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -75,6 +76,26 @@ public class AssemblyLocatedVariantDAOImpl extends BaseDAOImpl<AssemblyLocatedVa
             List<Predicate> predicates = new ArrayList<Predicate>();
             Join<AssemblyLocatedVariant, Assembly> assemblyLocatedVariantAssemblyJoin = root.join(AssemblyLocatedVariant_.assembly);
             predicates.add(critBuilder.equal(assemblyLocatedVariantAssemblyJoin.get(Assembly_.id), assemblyId));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<AssemblyLocatedVariant> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            throw new CANVASDAOException(e);
+        }
+        return ret;
+    }
+
+    @Override
+    public List<AssemblyLocatedVariant> findByLocatedVariantId(Long locatedVariantId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<AssemblyLocatedVariant> ret = new ArrayList<AssemblyLocatedVariant>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<AssemblyLocatedVariant> crit = critBuilder.createQuery(getPersistentClass());
+            Root<AssemblyLocatedVariant> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(AssemblyLocatedVariant_.locatedVariant).get(LocatedVariant_.id), locatedVariantId));
+            crit.distinct(true);
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             TypedQuery<AssemblyLocatedVariant> query = getEntityManager().createQuery(crit);
             ret.addAll(query.getResultList());

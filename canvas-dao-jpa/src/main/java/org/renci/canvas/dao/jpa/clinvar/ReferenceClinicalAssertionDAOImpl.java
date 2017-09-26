@@ -213,6 +213,30 @@ public class ReferenceClinicalAssertionDAOImpl extends BaseDAOImpl<ReferenceClin
     }
 
     @Override
+    public List<ReferenceClinicalAssertion> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<ReferenceClinicalAssertion> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<ReferenceClinicalAssertion> crit = critBuilder.createQuery(getPersistentClass());
+            Root<ReferenceClinicalAssertion> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+
+            predicates.add(critBuilder.equal(root.join(ReferenceClinicalAssertion_.locatedVariant).get(LocatedVariant_.id), locVarId));
+
+            crit.distinct(true);
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+
+            TypedQuery<ReferenceClinicalAssertion> query = getEntityManager().createQuery(crit);
+
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    @Override
     public List<ReferenceClinicalAssertion> findByLocatedVariantIdAndVersionAndAssertionStatusExclusionList(Long locVarId, Long version,
             List<String> assertionStatusExcludes) throws CANVASDAOException {
         logger.debug("ENTERING findByLocatedVariantIdAndVersionAndAssertionStatusExclusionList(Long, Integer, List<String>)");

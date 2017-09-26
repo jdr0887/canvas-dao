@@ -16,6 +16,8 @@ public interface ReferenceClinicalAssertionDAO extends BaseDAO<ReferenceClinical
     public List<ReferenceClinicalAssertion> findRisk(Long incidentalBinId, String participant, Integer resultVersion)
             throws CANVASDAOException;
 
+    public List<ReferenceClinicalAssertion> findByLocatedVariantId(Long locVarId) throws CANVASDAOException;
+
     public List<ReferenceClinicalAssertion> findByLocatedVariantIdAndVersion(Long locVarId, Long version) throws CANVASDAOException;
 
     public List<ReferenceClinicalAssertion> findByLocatedVariantIdAndVersionAndAssertionStatusExclusionList(Long locVarId, Long version,

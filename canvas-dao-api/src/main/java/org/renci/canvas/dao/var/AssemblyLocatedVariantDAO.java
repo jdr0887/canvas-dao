@@ -13,6 +13,8 @@ public interface AssemblyLocatedVariantDAO extends BaseDAO<AssemblyLocatedVarian
 
     public List<AssemblyLocatedVariant> findByAssemblyId(Integer assemblyId) throws CANVASDAOException;
 
+    public List<AssemblyLocatedVariant> findByLocatedVariantId(Long locatedVariantId) throws CANVASDAOException;
+
     public void deleteByAssemblyId(Integer assemblyId) throws CANVASDAOException;
 
 }

@@ -11,4 +11,6 @@ public interface ESPSNPFrequencyPopulationDAO extends BaseDAO<ESPSNPFrequencyPop
 
     public List<ESPSNPFrequencyPopulation> findByLocatedVariantIdAndVersion(Long locVarId, Integer version) throws CANVASDAOException;
 
+    public List<ESPSNPFrequencyPopulation> findByLocatedVariantId(Long locVarId) throws CANVASDAOException;
+
 }

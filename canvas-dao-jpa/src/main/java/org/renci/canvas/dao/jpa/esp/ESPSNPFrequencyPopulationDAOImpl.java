@@ -63,4 +63,24 @@ public class ESPSNPFrequencyPopulationDAOImpl extends BaseDAOImpl<ESPSNPFrequenc
         return ret;
     }
 
+    @Override
+    public List<ESPSNPFrequencyPopulation> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<ESPSNPFrequencyPopulation> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<ESPSNPFrequencyPopulation> crit = critBuilder.createQuery(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            Root<ESPSNPFrequencyPopulation> root = crit.from(getPersistentClass());
+            predicates.add(critBuilder.equal(root.join(ESPSNPFrequencyPopulation_.locatedVariant).get(LocatedVariant_.id), locVarId));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            crit.distinct(true);
+            TypedQuery<ESPSNPFrequencyPopulation> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
 }

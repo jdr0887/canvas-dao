@@ -53,6 +53,27 @@ public class GnomADVariantFrequencyDAOImpl extends BaseDAOImpl<GnomADVariantFreq
             List<Predicate> predicates = new ArrayList<Predicate>();
             predicates.add(critBuilder.equal(root.join(GnomADVariantFrequency_.locatedVariant).get(LocatedVariant_.id), locVarId));
             predicates.add(critBuilder.equal(root.get(GnomADVariantFrequency_.id).get(GnomADVariantFrequencyPK_.version), version));
+            crit.distinct(true);
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<GnomADVariantFrequency> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    @Override
+    public List<GnomADVariantFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<GnomADVariantFrequency> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<GnomADVariantFrequency> crit = critBuilder.createQuery(getPersistentClass());
+            Root<GnomADVariantFrequency> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(GnomADVariantFrequency_.locatedVariant).get(LocatedVariant_.id), locVarId));
+            crit.distinct(true);
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             TypedQuery<GnomADVariantFrequency> query = getEntityManager().createQuery(crit);
             ret.addAll(query.getResultList());

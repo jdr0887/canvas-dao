@@ -11,4 +11,6 @@ public interface GnomADVariantFrequencyDAO extends BaseDAO<GnomADVariantFrequenc
 
     public List<GnomADVariantFrequency> findByLocatedVariantIdAndVersion(Long locVarId, String version) throws CANVASDAOException;
 
+    public List<GnomADVariantFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException;
+
 }

@@ -2,7 +2,9 @@ package org.renci.canvas.dao.jpa.var;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Singleton;
 import javax.persistence.TypedQuery;
@@ -232,7 +234,7 @@ public class LocatedVariantDAOImpl extends BaseDAOImpl<LocatedVariant, Long> imp
     @Override
     public List<LocatedVariant> findBad(Integer genomeRefId) throws CANVASDAOException {
         logger.debug("ENTERING findByCanonicalAlleleId(Integer)");
-        List<LocatedVariant> ret = new ArrayList<>();
+        Set<LocatedVariant> lvSet = new HashSet<>();
         try {
             CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
             CriteriaQuery<LocatedVariant> crit = critBuilder.createQuery(getPersistentClass());
@@ -243,11 +245,28 @@ public class LocatedVariantDAOImpl extends BaseDAOImpl<LocatedVariant, Long> imp
             predicates.add(root.join(LocatedVariant_.variantType).get(VariantType_.id).in(Arrays.asList("snp", "sub")));
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             TypedQuery<LocatedVariant> query = getEntityManager().createQuery(crit);
-            ret.addAll(query.getResultList());
+            lvSet.addAll(query.getResultList());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return ret;
+
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<LocatedVariant> crit = critBuilder.createQuery(getPersistentClass());
+            Root<LocatedVariant> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.join(LocatedVariant_.genomeRef).get(GenomeRef_.id), genomeRefId));
+            predicates.add(critBuilder.notEqual(root.get(LocatedVariant_.seq), root.get(LocatedVariant_.ref)));
+            predicates.add(critBuilder.equal(critBuilder.substring(root.get(LocatedVariant_.ref), 1, 1),
+                    critBuilder.substring(root.get(LocatedVariant_.seq), 1, 1)));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<LocatedVariant> query = getEntityManager().createQuery(crit);
+            lvSet.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return new ArrayList<>(lvSet);
     }
 
     @Override

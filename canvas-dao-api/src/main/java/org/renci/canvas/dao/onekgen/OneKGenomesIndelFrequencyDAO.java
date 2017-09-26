@@ -11,4 +11,6 @@ public interface OneKGenomesIndelFrequencyDAO extends BaseDAO<OneKGenomesIndelFr
 
     public List<OneKGenomesIndelFrequency> findByLocatedVariantIdAndVersion(Long locVarId, Integer version) throws CANVASDAOException;
 
+    public List<OneKGenomesIndelFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException;
+
 }

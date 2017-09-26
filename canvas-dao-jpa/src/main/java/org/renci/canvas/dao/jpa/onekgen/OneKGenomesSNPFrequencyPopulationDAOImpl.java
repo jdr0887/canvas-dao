@@ -28,8 +28,9 @@ import org.springframework.stereotype.Component;
 @OsgiServiceProvider(classes = { OneKGenomesSNPFrequencyPopulationDAO.class })
 @javax.transaction.Transactional(javax.transaction.Transactional.TxType.SUPPORTS)
 @Singleton
-public class OneKGenomesSNPFrequencyPopulationDAOImpl extends
-        BaseDAOImpl<OneKGenomesSNPFrequencyPopulation, OneKGenomesSNPFrequencyPopulationPK> implements OneKGenomesSNPFrequencyPopulationDAO {
+public class OneKGenomesSNPFrequencyPopulationDAOImpl
+        extends BaseDAOImpl<OneKGenomesSNPFrequencyPopulation, OneKGenomesSNPFrequencyPopulationPK>
+        implements OneKGenomesSNPFrequencyPopulationDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(OneKGenomesSNPFrequencyPopulationDAOImpl.class);
 
@@ -56,6 +57,27 @@ public class OneKGenomesSNPFrequencyPopulationDAOImpl extends
                     .add(critBuilder.equal(root.join(OneKGenomesSNPFrequencyPopulation_.locatedVariant).get(LocatedVariant_.id), locVarId));
             predicates.add(critBuilder
                     .equal(root.get(OneKGenomesSNPFrequencyPopulation_.id).get(OneKGenomesSNPFrequencyPopulationPK_.version), version));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            crit.distinct(true);
+            TypedQuery<OneKGenomesSNPFrequencyPopulation> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public List<OneKGenomesSNPFrequencyPopulation> findByLocatedVariantId(Long locVarId) throws CANVASDAOException {
+        logger.debug("ENTERING findByLocatedVariantId(Long)");
+        List<OneKGenomesSNPFrequencyPopulation> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<OneKGenomesSNPFrequencyPopulation> crit = critBuilder.createQuery(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            Root<OneKGenomesSNPFrequencyPopulation> root = crit.from(getPersistentClass());
+            predicates
+                    .add(critBuilder.equal(root.join(OneKGenomesSNPFrequencyPopulation_.locatedVariant).get(LocatedVariant_.id), locVarId));
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             crit.distinct(true);
             TypedQuery<OneKGenomesSNPFrequencyPopulation> query = getEntityManager().createQuery(crit);

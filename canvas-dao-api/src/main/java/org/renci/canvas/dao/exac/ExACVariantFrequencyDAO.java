@@ -11,4 +11,6 @@ public interface ExACVariantFrequencyDAO extends BaseDAO<ExACVariantFrequency, E
 
     public List<ExACVariantFrequency> findByLocatedVariantIdAndVersion(Long locVarId, String version) throws CANVASDAOException;
 
+    public List<ExACVariantFrequency> findByLocatedVariantId(Long locVarId) throws CANVASDAOException;
+
 }

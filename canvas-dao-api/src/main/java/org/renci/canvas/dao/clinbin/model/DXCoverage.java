@@ -3,6 +3,7 @@ package org.renci.canvas.dao.clinbin.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "clinbin", name = "dx_coverage")
+@Table(schema = "clinbin", name = "dx_coverage", indexes = { @Index(name = "dx_coverage_dx_exon_id_idx", columnList = "dx_exon_id") })
 public class DXCoverage implements Persistable<DXCoveragePK> {
 
     private static final long serialVersionUID = -2985428056984351080L;

@@ -3,6 +3,7 @@ package org.renci.canvas.dao.refseq.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -11,7 +12,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "cds_transl_exceptions")
+@Table(schema = "refseq", name = "cds_transl_exceptions", indexes = {
+        @Index(name = "cds_transl_exceptions_refseq_cds_id_idx", columnList = "refseq_cds_id") })
 public class CDSTranslationException implements Persistable<CDSTranslationExceptionPK> {
 
     private static final long serialVersionUID = 9067053037558120433L;

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -14,7 +15,9 @@ import javax.persistence.UniqueConstraint;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "var", name = "sample", uniqueConstraints = { @UniqueConstraint(columnNames = { "project_name", "sample_name" }) })
+@Table(schema = "var", name = "sample", indexes = {
+        @Index(name = "sample_project_name_idx", columnList = "project_name") }, uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "project_name", "sample_name" }) })
 public class Sample implements Persistable<Integer> {
 
     private static final long serialVersionUID = 1409603720862058803L;

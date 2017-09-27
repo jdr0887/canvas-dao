@@ -2,6 +2,7 @@ package org.renci.canvas.dao.clinbin.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -13,7 +14,10 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.annotation.model.AnnotationGene;
 
 @Entity
-@Table(schema = "clinbin", name = "incidental_bin_genex")
+@Table(schema = "clinbin", name = "incidental_bin_genex", indexes = {
+        @Index(name = "incidental_bin_genex_gene_id_idx", columnList = "gene_id"),
+        @Index(name = "incidental_bin_genex_incidental_bin_id_idx", columnList = "incidental_bin_id"),
+        @Index(name = "incidental_bin_genex_phenotype_id_idx", columnList = "phenotype_id") })
 @NamedEntityGraph(name = "clinbin.IncidentalBinGeneX.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "incidentalBin"),
         @NamedAttributeNode(value = "gene"), @NamedAttributeNode(value = "phenotype"), @NamedAttributeNode(value = "zygosityMode") })
 public class IncidentalBinGeneX implements Persistable<IncidentalBinGeneXPK> {

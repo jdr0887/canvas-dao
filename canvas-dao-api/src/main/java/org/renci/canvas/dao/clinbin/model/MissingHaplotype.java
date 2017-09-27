@@ -2,6 +2,7 @@ package org.renci.canvas.dao.clinbin.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -11,7 +12,8 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "clinbin", name = "missing_haps")
+@Table(schema = "clinbin", name = "missing_haps", indexes = {
+        @Index(name = "missing_haps_incidental_bin_id_idx", columnList = "incidental_bin_id") })
 public class MissingHaplotype implements Persistable<MissingHaplotypePK> {
 
     private static final long serialVersionUID = -2316188402006932713L;

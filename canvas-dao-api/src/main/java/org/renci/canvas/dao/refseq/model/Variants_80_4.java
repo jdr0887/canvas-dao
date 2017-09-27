@@ -23,7 +23,7 @@ import org.renci.canvas.dao.var.model.VariantType;
 @Entity
 @Table(schema = "refseq", name = "variants_80_4", indexes = { @Index(name = "variants_80_4_gene_id_idx", columnList = "gene_id"),
         @Index(name = "variants_80_4_hgnc_gene_idx", columnList = "hgnc_gene"),
-        @Index(name = "variants_80_4_frameshift_variant_effect_idx", columnList = "frameshift, variant_effect") })
+        @Index(name = "variants_80_4_variant_effect_idx", columnList = "variant_effect") })
 @NamedEntityGraphs({ @NamedEntityGraph(name = "refseq.Variants_80_4.includeManyToOnes", attributeNodes = {
         @NamedAttributeNode(value = "locatedVariant"), @NamedAttributeNode(value = "genomeRefSeq"),
         @NamedAttributeNode(value = "variantType"), @NamedAttributeNode(value = "locationType"),

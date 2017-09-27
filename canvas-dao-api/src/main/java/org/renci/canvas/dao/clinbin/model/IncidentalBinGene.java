@@ -3,6 +3,7 @@ package org.renci.canvas.dao.clinbin.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,7 +13,9 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.annotation.model.AnnotationGene;
 
 @Entity
-@Table(schema = "clinbin", name = "incidental_bin_gene")
+@Table(schema = "clinbin", name = "incidental_bin_gene", indexes = {
+        @Index(name = "incidental_bin_gene_gene_id_idx", columnList = "gene_id"),
+        @Index(name = "incidental_bin_gene_incidental_bin_id_idx", columnList = "incidental_bin_id") })
 public class IncidentalBinGene implements Persistable<IncidentalBinGenePK> {
 
     private static final long serialVersionUID = 8992564182838865854L;

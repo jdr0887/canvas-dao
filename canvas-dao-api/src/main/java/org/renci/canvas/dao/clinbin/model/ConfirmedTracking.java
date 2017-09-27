@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,9 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "clinbin", name = "confirmed_tracking")
+@Table(schema = "clinbin", name = "confirmed_tracking", indexes = {
+        @Index(name = "confirmed_tracking_loc_var_id_idx", columnList = "loc_var_id"),
+        @Index(name = "confirmed_tracking_phenotype_id_idx", columnList = "phenotype_id") })
 public class ConfirmedTracking implements Persistable<Integer> {
 
     private static final long serialVersionUID = -6611989996091211456L;

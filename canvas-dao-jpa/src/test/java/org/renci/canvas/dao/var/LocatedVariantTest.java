@@ -132,6 +132,20 @@ public class LocatedVariantTest {
     }
 
     @Test
+    public void testFindIdList() throws CANVASDAOException {
+        LocatedVariantDAOImpl locatedVariantDAO = new LocatedVariantDAOImpl();
+        locatedVariantDAO.setEntityManager(em);
+
+        List<LocatedVariant> foundLocatedVariants = locatedVariantDAO
+                .findByIdList(Arrays.asList(482286568L, 482281370L, 482322579L, 481988486L));
+
+        for (LocatedVariant locatedVariant : foundLocatedVariants) {
+            System.out.println(locatedVariant.toString());
+        }
+
+    }
+
+    @Test
     public void testIncrementable() throws CANVASDAOException {
         LocatedVariantDAOImpl locatedVariantDAO = new LocatedVariantDAOImpl();
         locatedVariantDAO.setEntityManager(em);

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -13,7 +14,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "var", name = "asm")
+@Table(schema = "var", name = "asm", indexes = { @Index(name = "asm_library_id_idx", columnList = "library_id"),
+        @Index(name = "asm_var_set_id_idx", columnList = "var_set_id") })
 public class Assembly implements Persistable<Integer> {
 
     private static final long serialVersionUID = 6349711189938113203L;

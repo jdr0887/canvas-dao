@@ -3,6 +3,7 @@ package org.renci.canvas.dao.onekgen.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,7 +13,8 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "gen1000", name = "snp_pop_max_freq")
+@Table(schema = "gen1000", name = "snp_pop_max_freq", indexes = {
+        @Index(name = "snp_pop_max_freq_loc_var_id_idx", columnList = "loc_var_id") })
 public class OneKGenomesSNPPopulationMaxFrequency implements Persistable<OneKGenomesSNPPopulationMaxFrequencyPK> {
 
     private static final long serialVersionUID = 7870826168521038137L;

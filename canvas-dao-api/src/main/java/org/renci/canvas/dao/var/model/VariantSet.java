@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,7 +19,7 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.ref.model.GenomeRef;
 
 @Entity
-@Table(schema = "var", name = "var_set")
+@Table(schema = "var", name = "var_set", indexes = { @Index(name = "var_set_ref_id_idx", columnList = "ref_id") })
 public class VariantSet implements Persistable<Integer> {
 
     private static final long serialVersionUID = 6821062280221341220L;

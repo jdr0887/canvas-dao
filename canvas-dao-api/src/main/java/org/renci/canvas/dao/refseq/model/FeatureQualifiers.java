@@ -2,12 +2,14 @@ package org.renci.canvas.dao.refseq.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "feature_qualifiers")
+@Table(schema = "refseq", name = "feature_qualifiers", indexes = {
+        @Index(name = "feature_qualifiers_refseq_feature_id_idx", columnList = "refseq_feature_id") })
 public class FeatureQualifiers implements Persistable<FeatureQualifiersPK> {
 
     private static final long serialVersionUID = -3311478922232286832L;

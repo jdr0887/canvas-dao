@@ -44,7 +44,8 @@ public class GenomeRef implements Persistable<Integer> {
     private String extrasFastaURL;
 
     @ManyToMany(targetEntity = GenomeRefSeq.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-    @JoinTable(schema = "ref", name = "genome_ref_seqs", joinColumns = @JoinColumn(name = "ref_id"), inverseJoinColumns = @JoinColumn(name = "seq_ver_accession"))
+    @JoinTable(schema = "ref", name = "genome_ref_seqs", indexes = {
+            @Index(name = "genome_ref_seqs_ref_id_idx", columnList = "ref_id") }, joinColumns = @JoinColumn(name = "ref_id"), inverseJoinColumns = @JoinColumn(name = "seq_ver_accession"))
     private Set<GenomeRefSeq> genomeRefSeqs;
 
     public GenomeRef() {

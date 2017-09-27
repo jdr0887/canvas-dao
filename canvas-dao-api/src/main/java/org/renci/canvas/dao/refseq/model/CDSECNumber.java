@@ -2,6 +2,7 @@ package org.renci.canvas.dao.refseq.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "cds_ec_nums")
+@Table(schema = "refseq", name = "cds_ec_nums", indexes = { @Index(name = "cds_ec_nums_refseq_cds_id_idx", columnList = "refseq_cds_id") })
 public class CDSECNumber implements Persistable<CDSECNumberPK> {
 
     private static final long serialVersionUID = -3476372807341372440L;

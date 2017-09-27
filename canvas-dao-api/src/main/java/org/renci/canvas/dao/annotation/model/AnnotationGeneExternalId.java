@@ -2,6 +2,7 @@ package org.renci.canvas.dao.annotation.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "annot", name = "gene_external_ids")
+@Table(schema = "annot", name = "gene_external_ids", indexes = { @Index(name = "gene_external_ids_gene_id_idx", columnList = "gene_id") })
 @NamedEntityGraph(name = "annot.AnnotationGeneExternalId.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "gene") })
 public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExternalIdPK> {
 

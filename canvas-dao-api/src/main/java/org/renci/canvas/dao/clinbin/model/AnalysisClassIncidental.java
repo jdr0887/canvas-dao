@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,9 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "clinbin", name = "analysis_class_incidental")
+@Table(schema = "clinbin", name = "analysis_class_incidental", indexes = {
+        @Index(name = "analysis_class_incidental_incidental_bin_id_idx", columnList = "incidental_bin_id"),
+        @Index(name = "analysis_class_incidental_loc_var_id_idx", columnList = "loc_var_id") })
 public class AnalysisClassIncidental implements Persistable<Integer> {
 
     private static final long serialVersionUID = -4523788379740204587L;

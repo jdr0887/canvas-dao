@@ -30,7 +30,9 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "clinvar", name = "reference_clinical_assertions", indexes = {
-        @Index(name = "reference_clinical_assertions_loc_var_id_idx", columnList = "loc_var_id") })
+        @Index(name = "reference_clinical_assertions_loc_var_id_idx", columnList = "loc_var_id"),
+        @Index(name = "reference_clinical_assertions_assertion_idx", columnList = "assertion"),
+        @Index(name = "reference_clinical_assertions_trait_set_id_idx", columnList = "trait_set_id") })
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "clinvar.ReferenceClinicalAssertion.includeManyToOnes", attributeNodes = {
                 @NamedAttributeNode(value = "locatedVariant"), @NamedAttributeNode(value = "assertion"),
@@ -91,7 +93,8 @@ public class ReferenceClinicalAssertion implements Persistable<Long> {
     private Set<SubmissionClinicalAssertion> submissionClinicalAssertions;
 
     @ManyToMany(targetEntity = ClinVarVersion.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
-    @JoinTable(schema = "clinvar", name = "version_accession_map", inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
+    @JoinTable(schema = "clinvar", name = "version_accession_map", indexes = {
+            @Index(name = "version_accession_map_clinvar_version_id_idx", columnList = "clinvar_version_id") }, inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
     private Set<ClinVarVersion> versions;
 
     public ReferenceClinicalAssertion() {

@@ -2,6 +2,7 @@ package org.renci.canvas.dao.refseq.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -13,7 +14,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "region_group_regions")
+@Table(schema = "refseq", name = "region_group_regions", indexes = {
+        @Index(name = "region_group_regions_region_group_id_idx", columnList = "region_group_id") })
 // @NamedEntityGraphs({ @NamedEntityGraph(name = "refseq.RegionGroupRegion.includeManyToOnes", attributeNodes = {
 // @NamedAttributeNode(value = "regionGroup", subgraph = "regionGroup.includeManyToOnes") }, subgraphs = {
 // @NamedSubgraph(name = "regionGroup.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "transcript"),

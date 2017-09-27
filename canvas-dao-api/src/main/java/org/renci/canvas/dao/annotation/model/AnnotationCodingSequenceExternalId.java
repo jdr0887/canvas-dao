@@ -2,6 +2,7 @@ package org.renci.canvas.dao.annotation.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -17,7 +18,7 @@ import org.renci.canvas.dao.Persistable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType
 @Entity
-@Table(schema = "annot", name = "cds_external_ids")
+@Table(schema = "annot", name = "cds_external_ids", indexes = { @Index(name = "cds_external_ids_cds_id_idx", columnList = "cds_id") })
 public class AnnotationCodingSequenceExternalId implements Persistable<AnnotationCodingSequenceExternalIdPK> {
 
     private static final long serialVersionUID = 1608955318038314154L;

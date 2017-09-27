@@ -2,16 +2,18 @@ package org.renci.canvas.dao.refseq.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "transcr_maps_warnings")
+@Table(schema = "refseq", name = "transcr_maps_warnings", indexes = {
+        @Index(name = "transcr_maps_warnings_refseq_transcr_maps_id_idx", columnList = "refseq_transcr_maps_id") })
 public class TranscriptMapsWarnings implements Persistable<TranscriptMapsWarningsPK> {
 
     private static final long serialVersionUID = -2355445123640295983L;
-    
+
     @EmbeddedId
     private TranscriptMapsWarningsPK id;
 

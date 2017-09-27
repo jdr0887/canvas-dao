@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -39,9 +40,10 @@ public class RefSeqGene implements Persistable<Integer> {
     private String description;
 
     @ManyToMany(targetEntity = RegionGroup.class, fetch = FetchType.LAZY)
-    @JoinTable(schema = "refseq", name = "gene_locs", joinColumns = {
-            @JoinColumn(name = "refseq_gene_id", referencedColumnName = "refseq_gene_id") }, inverseJoinColumns = {
-                    @JoinColumn(name = "loc_region_group_id", referencedColumnName = "region_group_id") })
+    @JoinTable(schema = "refseq", name = "gene_locs", indexes = {
+            @Index(name = "gene_locs_refseq_gene_id_idx", columnList = "refseq_gene_id") }, joinColumns = {
+                    @JoinColumn(name = "refseq_gene_id", referencedColumnName = "refseq_gene_id") }, inverseJoinColumns = {
+                            @JoinColumn(name = "loc_region_group_id", referencedColumnName = "region_group_id") })
     private Set<RegionGroup> locations;
 
     public RefSeqGene() {

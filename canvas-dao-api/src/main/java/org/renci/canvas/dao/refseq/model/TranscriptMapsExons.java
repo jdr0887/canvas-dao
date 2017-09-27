@@ -3,6 +3,7 @@ package org.renci.canvas.dao.refseq.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -16,7 +17,8 @@ import org.apache.commons.lang3.Range;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "transcr_maps_exons")
+@Table(schema = "refseq", name = "transcr_maps_exons", indexes = {
+        @Index(name = "transcr_maps_exons_refseq_transcr_maps_id_idx", columnList = "refseq_transcr_maps_id") })
 @NamedEntityGraphs({ @NamedEntityGraph(name = "refseq.TranscriptMapsExons.includeManyToOnes", attributeNodes = {
         @NamedAttributeNode(value = "transcriptMaps") }) })
 public class TranscriptMapsExons implements Persistable<TranscriptMapsExonsPK> {

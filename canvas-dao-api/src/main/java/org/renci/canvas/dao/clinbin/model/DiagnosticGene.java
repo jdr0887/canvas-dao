@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -20,7 +21,9 @@ import org.renci.canvas.dao.annotation.model.AnnotationGene;
 
 @Entity
 @Table(schema = "clinbin", name = "diagnostic_gene", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "diagnostic_list_version", "dx_id", "gene_id", "tier", "inheritance" }) })
+        @UniqueConstraint(columnNames = { "diagnostic_list_version", "dx_id", "gene_id", "tier", "inheritance" }) }, indexes = {
+                @Index(name = "diagnostic_gene_dx_id_idx", columnList = "dx_id"),
+                @Index(name = "diagnostic_gene_gene_id_idx", columnList = "gene_id") })
 @NamedEntityGraph(name = "clinbin.DiagnosticGene.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "gene"),
         @NamedAttributeNode(value = "dx") })
 public class DiagnosticGene implements Persistable<Integer> {

@@ -2,6 +2,7 @@ package org.renci.canvas.dao.refseq.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "transcr_refseq_vers")
+@Table(schema = "refseq", name = "transcr_refseq_vers", indexes = {
+        @Index(name = "transcr_refseq_vers_ver_id_idx", columnList = "ver_id") })
 public class TranscriptRefSeqVersion implements Persistable<TranscriptRefSeqVersionPK> {
 
     private static final long serialVersionUID = 7323721337345220492L;

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -58,7 +59,8 @@ public class RefSeqCodingSequence implements Persistable<Integer> {
     private String note;
 
     @ManyToMany(targetEntity = RegionGroup.class)
-    @JoinTable(schema = "refseq", name = "cds_locs", joinColumns = @JoinColumn(name = "refseq_cds_id"), inverseJoinColumns = @JoinColumn(name = "loc_region_group_id"))
+    @JoinTable(schema = "refseq", name = "cds_locs", indexes = {
+            @Index(name = "cds_locs_refseq_cds_id_idx", columnList = "refseq_cds_id") }, joinColumns = @JoinColumn(name = "refseq_cds_id"), inverseJoinColumns = @JoinColumn(name = "loc_region_group_id"))
     private Set<RegionGroup> locations;
 
     @OneToMany(mappedBy = "refseqCodingSequence")

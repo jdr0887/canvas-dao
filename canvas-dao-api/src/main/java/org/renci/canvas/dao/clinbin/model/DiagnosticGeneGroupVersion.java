@@ -2,6 +2,7 @@ package org.renci.canvas.dao.clinbin.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "clinbin", name = "diagnostic_gene_group_version")
+@Table(schema = "clinbin", name = "diagnostic_gene_group_version", indexes = {
+        @Index(name = "diagnostic_gene_group_version_dx_id_idx", columnList = "dx_id") })
 public class DiagnosticGeneGroupVersion implements Persistable<DiagnosticGeneGroupVersionPK> {
 
     private static final long serialVersionUID = -7848676259877544883L;

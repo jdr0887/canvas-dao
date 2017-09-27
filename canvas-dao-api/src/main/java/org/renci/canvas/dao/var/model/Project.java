@@ -3,6 +3,7 @@ package org.renci.canvas.dao.var.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "var", name = "project")
+@Table(schema = "var", name = "project", indexes = { @Index(name = "project_lab_name_idx", columnList = "lab_name") })
 public class Project implements Persistable<String> {
 
     private static final long serialVersionUID = 7097989793849389482L;

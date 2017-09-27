@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
@@ -35,7 +36,8 @@ import org.renci.canvas.dao.var.model.constraints.LocatedVariantConstraint;
 
 @Entity
 @Table(schema = "var", name = "loc_var", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "loc_var_id", "ref_id", "ref_ver_accession", "pos", "type", "seq", "end_pos" }) })
+        @UniqueConstraint(columnNames = { "loc_var_id", "ref_id", "ref_ver_accession", "pos", "type", "seq", "end_pos" }) }, indexes = {
+                @Index(name = "loc_var_ref_id_idx", columnList = "ref_id") })
 @NamedEntityGraph(name = "var.LocatedVariant.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "genomeRef"),
         @NamedAttributeNode(value = "genomeRefSeq", subgraph = "genomeRefSeq.includeManyToOnes"),
         @NamedAttributeNode(value = "variantType") }, subgraphs = {

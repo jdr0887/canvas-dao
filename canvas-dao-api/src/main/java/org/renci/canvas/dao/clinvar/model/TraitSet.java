@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -29,7 +30,9 @@ public class TraitSet implements Persistable<Integer> {
     private String type;
 
     @ManyToMany(targetEntity = Trait.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
-    @JoinTable(schema = "clinvar", name = "traitsets_to_traits", joinColumns = @JoinColumn(name = "trait_set_id"), inverseJoinColumns = @JoinColumn(name = "trait_id"))
+    @JoinTable(schema = "clinvar", name = "traitsets_to_traits", indexes = {
+            @Index(name = "traitsets_to_traits_trait_id_idx", columnList = "trait_id"),
+            @Index(name = "traitsets_to_traits_trait_set_id_idx", columnList = "trait_set_id") }, joinColumns = @JoinColumn(name = "trait_set_id"), inverseJoinColumns = @JoinColumn(name = "trait_id"))
     private Set<Trait> traits;
 
     public TraitSet() {

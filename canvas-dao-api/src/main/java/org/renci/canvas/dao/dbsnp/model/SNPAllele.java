@@ -2,6 +2,7 @@ package org.renci.canvas.dao.dbsnp.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "dbsnp", name = "snp_allele")
+@Table(schema = "dbsnp", name = "snp_allele", indexes = { @Index(name = "snp_allele_snp_id_idx", columnList = "snp_id") })
 public class SNPAllele implements Persistable<SNPAllelePK> {
 
     private static final long serialVersionUID = -5645621093590174075L;

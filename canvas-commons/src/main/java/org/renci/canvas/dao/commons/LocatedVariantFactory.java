@@ -89,138 +89,28 @@ public class LocatedVariantFactory {
 
     }
 
+    private static int findPrefixLength(String a, String b) {
+        int smallerLength = Math.min(a.length(), b.length());
+        for (int i = 0; i < smallerLength; i++) {
+            if (a.charAt(i) != b.charAt(i)) {
+                return i;
+            }
+        }
+        return smallerLength;
+    }
+
     private static Triple<Integer, String, String> trim(Integer position, String reference, String alternate) {
 
-        List<Character> referenceChars = reference.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
-        List<Character> alternateChars = alternate.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        int prefixLength = findPrefixLength(reference, alternate);
 
-        StringBuilder frontChars2Remove = new StringBuilder();
-        StringBuilder backChars2Remove = new StringBuilder();
+        String reversedRefWithoutPrefix = new StringBuffer(reference.substring(prefixLength)).reverse().toString();
+        String reversedAltWithoutPrefix = new StringBuffer(alternate.substring(prefixLength)).reverse().toString();
 
-        List<Character> charsToRemoveFromRef = new ArrayList<>();
+        int suffixLength = findPrefixLength(reversedRefWithoutPrefix, reversedAltWithoutPrefix);
 
-        if (referenceChars.size() == alternateChars.size()) {
-            logger.debug("referenceChars.size() == alternateChars.size(): {}", referenceChars.size() == alternateChars.size());
-
-            for (int i = 0; i < referenceChars.size(); ++i) {
-                if (referenceChars.get(i) != alternateChars.get(i)) {
-                    break;
-                }
-                charsToRemoveFromRef.add(referenceChars.get(i));
-                frontChars2Remove.append(referenceChars.get(i));
-            }
-
-            for (int i = 0; i < charsToRemoveFromRef.size(); ++i) {
-                referenceChars.remove(charsToRemoveFromRef.get(i));
-            }
-
-            if (CollectionUtils.isNotEmpty(referenceChars)) {
-                Collections.reverse(referenceChars);
-                Collections.reverse(alternateChars);
-                for (int i = 0; i < referenceChars.size(); ++i) {
-                    if (referenceChars.get(i) != alternateChars.get(i)) {
-                        break;
-                    }
-                    backChars2Remove.append(referenceChars.get(i));
-                }
-            }
-
-            if (frontChars2Remove.length() > 0) {
-                reference = reference.replaceFirst(frontChars2Remove.toString(), "");
-                alternate = alternate.replaceFirst(frontChars2Remove.toString(), "");
-            }
-
-            if (backChars2Remove.length() > 0) {
-                backChars2Remove.reverse();
-                reference = StringUtils.removeEnd(reference, backChars2Remove.toString());
-                alternate = StringUtils.removeEnd(alternate, backChars2Remove.toString());
-            }
-
-        } else if (referenceChars.size() > alternateChars.size()) {
-
-            logger.debug("referenceChars.size() > alternateChars.size(): {}", referenceChars.size() > alternateChars.size());
-
-            for (int i = 0; i < referenceChars.size(); ++i) {
-                if (i == alternateChars.size() || referenceChars.get(i) != alternateChars.get(i)) {
-                    break;
-                }
-                frontChars2Remove.append(referenceChars.get(i));
-            }
-
-            if (CollectionUtils.isNotEmpty(referenceChars) && CollectionUtils.isNotEmpty(alternateChars)) {
-
-                String tmpRef = referenceChars.stream().map(a -> a.toString()).collect(Collectors.joining());
-                tmpRef = tmpRef.replaceFirst(frontChars2Remove.toString(), "");
-                referenceChars = tmpRef.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
-
-                String tmpAlt = alternateChars.stream().map(a -> a.toString()).collect(Collectors.joining());
-                tmpAlt = tmpAlt.replaceFirst(frontChars2Remove.toString(), "");
-                alternateChars = tmpAlt.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
-
-                Collections.reverse(referenceChars);
-                Collections.reverse(alternateChars);
-                for (int i = 0; i < referenceChars.size(); ++i) {
-                    if (i == alternateChars.size() || referenceChars.get(i) != alternateChars.get(i)) {
-                        break;
-                    }
-                    backChars2Remove.append(referenceChars.get(i));
-                }
-            }
-
-            if (frontChars2Remove.length() > 0) {
-                reference = reference.replaceFirst(frontChars2Remove.toString(), "");
-                alternate = alternate.replaceFirst(frontChars2Remove.toString(), "");
-            }
-
-            if (backChars2Remove.length() > 0) {
-                backChars2Remove.reverse();
-                reference = StringUtils.removeEnd(reference, backChars2Remove.toString());
-                alternate = StringUtils.removeEnd(alternate, backChars2Remove.toString());
-            }
-
-        } else if (referenceChars.size() < alternateChars.size()) {
-
-            logger.debug("referenceChars.size() < alternateChars.size(): {}", referenceChars.size() < alternateChars.size());
-
-            for (int i = 0; i < referenceChars.size(); ++i) {
-                if (referenceChars.get(i) != alternateChars.get(i)) {
-                    break;
-                }
-                charsToRemoveFromRef.add(referenceChars.get(i));
-                frontChars2Remove.append(referenceChars.get(i));
-            }
-
-            for (int i = 0; i < charsToRemoveFromRef.size(); ++i) {
-                logger.debug("removing referenceChars: {} at {}", charsToRemoveFromRef.get(i), i);
-                referenceChars.remove(charsToRemoveFromRef.get(i));
-            }
-
-            if (CollectionUtils.isNotEmpty(referenceChars)) {
-                Collections.reverse(referenceChars);
-                Collections.reverse(alternateChars);
-                for (int i = 0; i < referenceChars.size(); ++i) {
-                    if (referenceChars.get(i) != alternateChars.get(i)) {
-                        break;
-                    }
-                    backChars2Remove.append(referenceChars.get(i));
-                }
-            }
-
-            if (frontChars2Remove.length() > 0) {
-                reference = reference.replaceFirst(frontChars2Remove.toString(), "");
-                alternate = alternate.replaceFirst(frontChars2Remove.toString(), "");
-            }
-
-            if (backChars2Remove.length() > 0) {
-                backChars2Remove.reverse();
-                reference = StringUtils.removeEnd(reference, backChars2Remove.toString());
-                alternate = StringUtils.removeEnd(alternate, backChars2Remove.toString());
-            }
-
-        }
-
-        position = position + (frontChars2Remove.length() > 0 ? frontChars2Remove.length() : 0);
-        return Triple.of(position, reference, alternate);
+        return Triple.of(position + prefixLength,
+                reference.substring(prefixLength, reference.length() - suffixLength),
+                alternate.substring(prefixLength, alternate.length() - suffixLength));
     }
 
 }

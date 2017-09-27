@@ -2,6 +2,7 @@ package org.renci.canvas.dao.annotation.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -17,7 +18,7 @@ import org.renci.canvas.dao.Persistable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType
 @Entity
-@Table(schema = "annot", name = "gene_synonyms")
+@Table(schema = "annot", name = "gene_synonyms", indexes = { @Index(name = "gene_synonyms_gene_id_idx", columnList = "gene_id") })
 public class AnnotationGeneSynonym implements Persistable<AnnotationGeneSynonymPK> {
 
     private static final long serialVersionUID = 3309532806166062035L;

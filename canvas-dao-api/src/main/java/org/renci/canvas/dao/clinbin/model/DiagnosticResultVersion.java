@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -26,7 +27,8 @@ import org.renci.canvas.dao.ref.model.GenomeRef;
 @Entity
 @Table(schema = "clinbin", name = "diagnostic_result_version", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "ref_id", "refseq_version", "hgmd_version", "gen1000_snp_version", "gen1000_indel_version",
-                "dbin_group_version", "algorithm_version", "dbsnp_version", "vcf_loader_name", "vcf_loader_version" }) })
+                "dbin_group_version", "algorithm_version", "dbsnp_version", "vcf_loader_name", "vcf_loader_version" }) }, indexes = {
+                        @Index(name = "diagnostic_result_version_ref_id_idx", columnList = "ref_id") })
 @NamedEntityGraph(name = "clinbin.DiagnosticResultVersion.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "genomeRef"),
         @NamedAttributeNode(value = "clinvarVersion") })
 public class DiagnosticResultVersion implements Persistable<Integer> {

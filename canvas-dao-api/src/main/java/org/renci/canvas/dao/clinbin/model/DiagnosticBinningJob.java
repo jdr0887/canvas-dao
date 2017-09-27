@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,9 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.Assembly;
 
 @Entity
-@Table(schema = "clinbin", name = "diagnostic_binning_job")
+@Table(schema = "clinbin", name = "diagnostic_binning_job", indexes = {
+        @Index(name = "diagnostic_binning_job_dx_id_idx", columnList = "dx_id"),
+        @Index(name = "diagnostic_binning_job_status_idx", columnList = "status") })
 public class DiagnosticBinningJob implements Persistable<Integer> {
 
     private static final long serialVersionUID = 6573081490007202189L;

@@ -2,6 +2,7 @@ package org.renci.canvas.dao.clinbin.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "clinbin", name = "incidental_bin_group_version")
+@Table(schema = "clinbin", name = "incidental_bin_group_version", indexes = {
+        @Index(name = "incidental_bin_group_version_incidental_bin_id_idx", columnList = "incidental_bin_id") })
 public class IncidentalBinGroupVersion implements Persistable<IncidentalBinGroupVersionPK> {
 
     private static final long serialVersionUID = 2212074020390950607L;

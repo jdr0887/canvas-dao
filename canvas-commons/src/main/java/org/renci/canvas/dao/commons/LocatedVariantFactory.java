@@ -1,11 +1,7 @@
 package org.renci.canvas.dao.commons;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Triple;
 import org.renci.canvas.dao.ref.model.GenomeRef;
@@ -103,13 +99,12 @@ public class LocatedVariantFactory {
 
         int prefixLength = findPrefixLength(reference, alternate);
 
-        String reversedRefWithoutPrefix = new StringBuffer(reference.substring(prefixLength)).reverse().toString();
-        String reversedAltWithoutPrefix = new StringBuffer(alternate.substring(prefixLength)).reverse().toString();
+        String reversedRefWithoutPrefix = new StringBuilder(reference.substring(prefixLength)).reverse().toString();
+        String reversedAltWithoutPrefix = new StringBuilder(alternate.substring(prefixLength)).reverse().toString();
 
         int suffixLength = findPrefixLength(reversedRefWithoutPrefix, reversedAltWithoutPrefix);
 
-        return Triple.of(position + prefixLength,
-                reference.substring(prefixLength, reference.length() - suffixLength),
+        return Triple.of(position + prefixLength, reference.substring(prefixLength, reference.length() - suffixLength),
                 alternate.substring(prefixLength, alternate.length() - suffixLength));
     }
 

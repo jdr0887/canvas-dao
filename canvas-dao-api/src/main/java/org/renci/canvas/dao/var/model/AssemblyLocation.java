@@ -3,6 +3,7 @@ package org.renci.canvas.dao.var.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,7 +13,7 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.ref.model.GenomeRefSeq;
 
 @Entity
-@Table(schema = "var", name = "asm_loc")
+@Table(schema = "var", name = "asm_loc", indexes = { @Index(name = "asm_loc_asm_id_idx", columnList = "asm_id") })
 public class AssemblyLocation implements Persistable<AssemblyLocationPK> {
 
     private static final long serialVersionUID = -6485178807017764493L;

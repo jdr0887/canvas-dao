@@ -6,6 +6,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.renci.canvas.dao.BaseDAO;
 import org.renci.canvas.dao.CANVASDAOException;
@@ -34,6 +39,27 @@ public abstract class BaseDAOImpl<T extends Persistable<ID>, ID extends Serializ
     public T findById(ID id) throws CANVASDAOException {
         logger.debug("ENTERING findById(T)");
         T ret = entityManager.find(getPersistentClass(), id);
+        return ret;
+    }
+
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @javax.transaction.Transactional(javax.transaction.Transactional.TxType.SUPPORTS)
+    @Override
+    public List<T> findByIdList(List<ID> idList) throws CANVASDAOException {
+        logger.debug("ENTERING findById(T)");
+        List<T> ret = new ArrayList<>();
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<T> crit = critBuilder.createQuery(getPersistentClass());
+            Root<T> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(root.<ID> get("id").in(idList));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<T> query = getEntityManager().createQuery(crit);
+            ret.addAll(query.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         return ret;
     }
 

@@ -20,7 +20,13 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "clinbin", name = "bin_results_final_diagnostic", indexes = {
-        @Index(name = "bin_results_final_diagnostic_participant_idx", columnList = "participant") })
+        @Index(name = "bin_results_final_diagnostic_participant_idx", columnList = "participant"),
+        @Index(name = "bin_results_final_diagnostic_asm_id_idx", columnList = "asm_id"),
+        @Index(name = "bin_results_final_diagnostic_diagnostic_result_version_idx", columnList = "diagnostic_result_version"),
+        @Index(name = "bin_results_final_diagnostic_dx_id_idx", columnList = "dx_id"),
+        @Index(name = "bin_results_final_diagnostic_loc_type_idx", columnList = "loc_type"),
+        @Index(name = "bin_results_final_diagnostic_loc_var_id_idx", columnList = "loc_var_id"),
+        @Index(name = "bin_results_final_diagnostic_variant_effect_idx", columnList = "variant_effect") })
 public class BinResultsFinalDiagnostic implements Persistable<BinResultsFinalDiagnosticPK> {
 
     private static final long serialVersionUID = -32282642230894067L;

@@ -3,6 +3,7 @@ package org.renci.canvas.dao.exac.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -14,8 +15,10 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "exac", name = "max_variant_freq")
-@NamedEntityGraph(name = "exac.ExACMaxVariantFrequency.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "locatedVariant") })
+@Table(schema = "exac", name = "max_variant_freq", indexes = {
+        @Index(name = "max_variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
+@NamedEntityGraph(name = "exac.ExACMaxVariantFrequency.includeManyToOnes", attributeNodes = {
+        @NamedAttributeNode(value = "locatedVariant") })
 public class ExACMaxVariantFrequency implements Persistable<ExACMaxVariantFrequencyPK> {
 
     private static final long serialVersionUID = -1388708510623130329L;

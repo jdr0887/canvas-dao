@@ -3,6 +3,7 @@ package org.renci.canvas.dao.clinbin.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,7 +14,8 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "clinbin", name = "haplotypex", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "haplotype_id", "loc_var_id", "allele" }) })
+        @UniqueConstraint(columnNames = { "haplotype_id", "loc_var_id", "allele" }) }, indexes = {
+                @Index(name = "haplotypex_loc_var_id_idx", columnList = "loc_var_id") })
 public class HaplotypeX implements Persistable<Integer> {
 
     private static final long serialVersionUID = 2392647483088782553L;

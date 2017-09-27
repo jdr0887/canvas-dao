@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "var", name = "var_set_load")
+@Table(schema = "var", name = "var_set_load", indexes = { @Index(name = "var_set_load_var_set_id_idx", columnList = "var_set_id") })
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "var.VariantSetLoad.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "variantSet") }) })
 public class VariantSetLoad implements Persistable<Integer> {

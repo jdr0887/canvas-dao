@@ -2,6 +2,7 @@ package org.renci.canvas.dao.dbsnp.model;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -11,7 +12,8 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "dbsnp", name = "snp_mapping")
+@Table(schema = "dbsnp", name = "snp_mapping", indexes = { @Index(name = "snp_mapping_loc_var_id_idx", columnList = "loc_var_id"),
+        @Index(name = "snp_mapping_snp_id_idx", columnList = "snp_id") })
 public class SNPMapping implements Persistable<SNPMappingPK> {
 
     private static final long serialVersionUID = -7892149256878922346L;

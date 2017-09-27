@@ -3,6 +3,7 @@ package org.renci.canvas.dao.gnomad.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -12,7 +13,7 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "gnomad", name = "variant_freq")
+@Table(schema = "gnomad", name = "variant_freq", indexes = { @Index(name = "variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
 public class GnomADVariantFrequency implements Persistable<GnomADVariantFrequencyPK> {
 
     private static final long serialVersionUID = 4359650786462818369L;

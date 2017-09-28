@@ -27,11 +27,6 @@ public class LocatedVariantFactory {
                 return null;
             }
 
-            if (StringUtils.isEmpty(alternate)) {
-                logger.error("alt is empty");
-                return null;
-            }
-
             if (reference.equals(alternate)) {
                 logger.error("reference and alternate are equal");
                 return null;

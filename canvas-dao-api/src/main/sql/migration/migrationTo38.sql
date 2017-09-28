@@ -259,4 +259,4 @@ update refseq.transcr_maps set min_contig=sub.themin, max_contig=sub.themax from
 ) as sub
 where sub.themapid=refseq_transcr_maps_id and sub.theverid=refseq_transcr_ver_id;
 
-insert into gnomad.max_variant_freq select loc_var_id, gnomad_version, max(alt_allele_freq) from gnomad.variant_freq group by loc_var_id, gnomad_version;
+

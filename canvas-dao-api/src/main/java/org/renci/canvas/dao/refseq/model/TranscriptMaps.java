@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
@@ -23,7 +24,9 @@ import org.renci.canvas.dao.ref.model.GenomeRef;
 import org.renci.canvas.dao.ref.model.GenomeRefSeq;
 
 @Entity
-@Table(schema = "refseq", name = "transcr_maps")
+@Table(schema = "refseq", name = "transcr_maps", indexes = {
+        @Index(name = "transcr_maps_refseq_transcr_ver_id_idx", columnList = "refseq_transcr_ver_id"),
+        @Index(name = "transcr_maps_seq_ver_accession_idx", columnList = "seq_ver_accession") })
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "refseq.TranscriptMaps.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "transcript"),
                 @NamedAttributeNode(value = "genomeRef"),

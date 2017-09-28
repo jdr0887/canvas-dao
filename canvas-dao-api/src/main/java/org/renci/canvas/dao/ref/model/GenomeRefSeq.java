@@ -16,7 +16,8 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "ref", name = "genome_ref_seq", indexes = { @Index(name = "genome_ref_seq_contig_idx", columnList = "contig") })
+@Table(schema = "ref", name = "genome_ref_seq", indexes = { @Index(name = "genome_ref_seq_contig_idx", columnList = "contig"),
+        @Index(name = "genome_ref_seq_seq_type_idx", columnList = "seq_type") })
 public class GenomeRefSeq implements Persistable<String> {
 
     private static final long serialVersionUID = 8237639060154518282L;

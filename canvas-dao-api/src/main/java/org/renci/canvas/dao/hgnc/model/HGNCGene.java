@@ -5,6 +5,7 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
@@ -14,7 +15,9 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "hgnc", name = "gene")
+@Table(schema = "hgnc", name = "gene", indexes = { @Index(name = "gene_locus_group_name_idx", columnList = "locus_group_name"),
+        @Index(name = "gene_locus_type_name_idx", columnList = "locus_type_name"),
+        @Index(name = "gene_status_idx", columnList = "status") })
 @NamedEntityGraph(name = "hgnc.HGNCGene.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "locusType"),
         @NamedAttributeNode(value = "locusGroup"), @NamedAttributeNode(value = "status") })
 public class HGNCGene implements Persistable<Integer> {

@@ -14,7 +14,7 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "esp", name = "snp_freq_population", indexes = {
-        @Index(name = "snp_freq_population_loc_var_id_idx", columnList = "loc_var_id")
+        @Index(name = "esp_snp_freq_population_loc_var_id_idx", columnList = "loc_var_id")
         })
 public class ESPSNPFrequencyPopulation implements Persistable<ESPSNPFrequencyPopulationPK> {
 

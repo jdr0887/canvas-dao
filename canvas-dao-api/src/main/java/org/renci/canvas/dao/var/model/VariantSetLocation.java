@@ -13,7 +13,8 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.ref.model.GenomeRefSeq;
 
 @Entity
-@Table(schema = "var", name = "var_set_loc", indexes = { @Index(name = "var_set_loc_var_set_id_idx", columnList = "var_set_id") })
+@Table(schema = "var", name = "var_set_loc", indexes = { @Index(name = "var_set_loc_var_set_id_idx", columnList = "var_set_id"),
+        @Index(name = "var_set_loc_ref_ver_accession_idx", columnList = "ref_ver_accession") })
 public class VariantSetLocation implements Persistable<VariantSetLocationPK> {
 
     private static final long serialVersionUID = 8718903481376803091L;

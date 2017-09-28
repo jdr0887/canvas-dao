@@ -23,7 +23,8 @@ import org.renci.canvas.dao.Persistable;
 
 @Entity
 @Table(schema = "refseq", name = "region_group", indexes = {
-        @Index(name = "region_group_transcr_ver_id_idx", columnList = "transcr_ver_id") })
+        @Index(name = "region_group_transcr_ver_id_idx", columnList = "transcr_ver_id"),
+        @Index(name = "region_group_grouping_type_idx", columnList = "grouping_type") })
 @NamedEntityGraphs({
         @NamedEntityGraph(name = "refseq.RegionGroup.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "transcript"),
                 @NamedAttributeNode(value = "groupingType") }),

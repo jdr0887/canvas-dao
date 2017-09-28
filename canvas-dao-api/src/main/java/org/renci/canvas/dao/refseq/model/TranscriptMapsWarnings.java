@@ -9,6 +9,7 @@ import org.renci.canvas.dao.Persistable;
 
 @Entity
 @Table(schema = "refseq", name = "transcr_maps_warnings", indexes = {
+        @Index(name = "transcr_maps_warnings_warning_warning_name_idx", columnList = "warning_warning_name"),
         @Index(name = "transcr_maps_warnings_refseq_transcr_maps_id_idx", columnList = "refseq_transcr_maps_id") })
 public class TranscriptMapsWarnings implements Persistable<TranscriptMapsWarningsPK> {
 

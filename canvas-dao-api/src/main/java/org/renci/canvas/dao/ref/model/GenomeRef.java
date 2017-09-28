@@ -17,9 +17,7 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "ref", name = "genome_ref", indexes = { @Index(name = "genome_ref_ref_shortname_idx", columnList = "ref_shortname"),
-        @Index(name = "genome_ref_ref_source_idx", columnList = "ref_source"),
-        @Index(name = "genome_ref_ref_ver_idx", columnList = "ref_ver") })
+@Table(schema = "ref", name = "genome_ref")
 public class GenomeRef implements Persistable<Integer> {
 
     private static final long serialVersionUID = -6241264265732175194L;
@@ -44,8 +42,8 @@ public class GenomeRef implements Persistable<Integer> {
     private String extrasFastaURL;
 
     @ManyToMany(targetEntity = GenomeRefSeq.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-    @JoinTable(schema = "ref", name = "genome_ref_seqs", indexes = {
-            @Index(name = "genome_ref_seqs_ref_id_idx", columnList = "ref_id") }, joinColumns = @JoinColumn(name = "ref_id"), inverseJoinColumns = @JoinColumn(name = "seq_ver_accession"))
+    @JoinTable(schema = "ref", name = "genome_ref_seqs", indexes = { @Index(name = "genome_ref_seqs_ref_id_idx", columnList = "ref_id"),
+            @Index(name = "genome_ref_seqs_seq_ver_accession_idx", columnList = "seq_ver_accession") }, joinColumns = @JoinColumn(name = "ref_id"), inverseJoinColumns = @JoinColumn(name = "seq_ver_accession"))
     private Set<GenomeRefSeq> genomeRefSeqs;
 
     public GenomeRef() {

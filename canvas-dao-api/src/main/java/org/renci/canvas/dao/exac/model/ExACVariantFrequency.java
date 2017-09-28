@@ -13,7 +13,7 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
-@Table(schema = "exac", name = "variant_freq", indexes = { @Index(name = "variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
+@Table(schema = "exac", name = "variant_freq", indexes = { @Index(name = "exac_variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
 public class ExACVariantFrequency implements Persistable<ExACVariantFrequencyPK> {
 
     private static final long serialVersionUID = 4359650786462818369L;

@@ -22,6 +22,9 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 @Table(schema = "clinbin", name = "bin_results_final_diagnostic", indexes = {
         @Index(name = "bin_results_final_diagnostic_participant_idx", columnList = "participant"),
         @Index(name = "bin_results_final_diagnostic_asm_id_idx", columnList = "asm_id"),
+        @Index(name = "bin_results_final_diagnostic_clinvar_assertion_idx", columnList = "clinvar_assertion"),
+        @Index(name = "bin_results_final_diagnostic_hgmd_class_id_idx", columnList = "hgmd_class_id"),
+        @Index(name = "bin_results_final_diagnostic_clinvar_class_id_idx", columnList = "clinvar_class_id"),
         @Index(name = "bin_results_final_diagnostic_diagnostic_result_version_idx", columnList = "diagnostic_result_version"),
         @Index(name = "bin_results_final_diagnostic_dx_id_idx", columnList = "dx_id"),
         @Index(name = "bin_results_final_diagnostic_loc_type_idx", columnList = "loc_type"),

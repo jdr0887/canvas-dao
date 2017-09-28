@@ -30,7 +30,7 @@ public class CanonicalAllele implements Persistable<Integer> {
     @SequenceGenerator(name = "canonical_allele_canonical_allele_id_seq", schema = "var", sequenceName = "canonical_allele_canonical_allele_id_seq", allocationSize = 1, initialValue = 1)
     @Column(name = "canonical_allele_id")
     private Integer id;
-
+    
     @ManyToMany(targetEntity = LocatedVariant.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
     @JoinTable(schema = "var", name = "allele_map", indexes = { @Index(name = "allele_map_loc_var_id_idx", columnList = "loc_var_id"),
             @Index(name = "allele_map_canonical_allele_id_idx", columnList = "canonical_allele_id") }, joinColumns = @JoinColumn(name = "canonical_allele_id"), inverseJoinColumns = @JoinColumn(name = "loc_var_id"))

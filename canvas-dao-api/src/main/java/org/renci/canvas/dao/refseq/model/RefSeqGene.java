@@ -41,7 +41,8 @@ public class RefSeqGene implements Persistable<Integer> {
 
     @ManyToMany(targetEntity = RegionGroup.class, fetch = FetchType.LAZY)
     @JoinTable(schema = "refseq", name = "gene_locs", indexes = {
-            @Index(name = "gene_locs_refseq_gene_id_idx", columnList = "refseq_gene_id") }, joinColumns = {
+            @Index(name = "gene_locs_refseq_gene_id_idx", columnList = "refseq_gene_id"),
+            @Index(name = "gene_locs_loc_region_group_id_idx", columnList = "loc_region_group_id") }, joinColumns = {
                     @JoinColumn(name = "refseq_gene_id", referencedColumnName = "refseq_gene_id") }, inverseJoinColumns = {
                             @JoinColumn(name = "loc_region_group_id", referencedColumnName = "region_group_id") })
     private Set<RegionGroup> locations;

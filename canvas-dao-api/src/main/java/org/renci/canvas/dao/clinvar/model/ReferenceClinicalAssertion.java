@@ -94,7 +94,8 @@ public class ReferenceClinicalAssertion implements Persistable<Long> {
 
     @ManyToMany(targetEntity = ClinVarVersion.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
     @JoinTable(schema = "clinvar", name = "version_accession_map", indexes = {
-            @Index(name = "version_accession_map_clinvar_version_id_idx", columnList = "clinvar_version_id") }, inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
+            @Index(name = "version_accession_map_clinvar_version_id_idx", columnList = "clinvar_version_id"),
+            @Index(name = "version_accession_map_clinvar_ref_assertion_id_idx", columnList = "clinvar_ref_assertion_id") }, inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
     private Set<ClinVarVersion> versions;
 
     public ReferenceClinicalAssertion() {

@@ -37,7 +37,9 @@ import org.renci.canvas.dao.var.model.constraints.LocatedVariantConstraint;
 @Entity
 @Table(schema = "var", name = "loc_var", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "loc_var_id", "ref_id", "ref_ver_accession", "pos", "type", "seq", "end_pos" }) }, indexes = {
-                @Index(name = "loc_var_ref_id_idx", columnList = "ref_id") })
+                @Index(name = "loc_var_ref_id_idx", columnList = "ref_id"),
+                @Index(name = "loc_var_ref_ver_accession_idx", columnList = "ref_ver_accession"),
+                @Index(name = "loc_var_type_idx", columnList = "type") })
 @NamedEntityGraph(name = "var.LocatedVariant.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "genomeRef"),
         @NamedAttributeNode(value = "genomeRefSeq", subgraph = "genomeRefSeq.includeManyToOnes"),
         @NamedAttributeNode(value = "variantType") }, subgraphs = {

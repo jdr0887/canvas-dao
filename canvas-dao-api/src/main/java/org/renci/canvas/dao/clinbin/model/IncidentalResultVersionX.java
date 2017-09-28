@@ -23,7 +23,7 @@ import org.renci.canvas.dao.ref.model.GenomeRef;
 @Table(schema = "clinbin", name = "incidental_result_versionx", uniqueConstraints = {
         @UniqueConstraint(columnNames = { "ref_id", "refseq_version", "hgmd_version", "gen1000_snp_version", "gen1000_indel_version",
                 "ibin_group_version", "binning_algorithm_version", "vcf_loader_name", "vcf_loader_version" }) }, indexes = {
-                        @Index(name = "incidental_result_versionx_ref_id_idx", columnList = "ref_id") })
+                        @Index(name = "incidental_result_versionx_ref_id_idx", columnList = "ref_id")})
 public class IncidentalResultVersionX implements Persistable<Integer> {
 
     private static final long serialVersionUID = 8796340369982243885L;

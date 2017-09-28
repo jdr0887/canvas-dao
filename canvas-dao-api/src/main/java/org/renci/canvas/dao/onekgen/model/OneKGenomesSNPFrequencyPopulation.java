@@ -14,7 +14,7 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "gen1000", name = "snp_freq_population", indexes = {
-        @Index(name = "snp_freq_population_loc_var_id_idx", columnList = "loc_var_id") })
+        @Index(name = "gen1000_snp_freq_population_loc_var_id_idx", columnList = "loc_var_id") })
 public class OneKGenomesSNPFrequencyPopulation implements Persistable<OneKGenomesSNPFrequencyPopulationPK> {
 
     private static final long serialVersionUID = 644922221095328483L;

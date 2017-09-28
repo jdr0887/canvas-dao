@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -14,7 +15,10 @@ import javax.persistence.UniqueConstraint;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "clinbin", name = "incidental_bin", uniqueConstraints = { @UniqueConstraint(columnNames = { "bin_version", "bin_name" }) })
+@Table(schema = "clinbin", name = "incidental_bin", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "bin_version", "bin_name" }) }, indexes = {
+                @Index(name = "incidental_bin_incidental_bin_idx", columnList = "incidental_bin"),
+                @Index(name = "incidental_bin_zygosity_mode_idx", columnList = "zygosity_mode") })
 public class IncidentalBin implements Persistable<Integer> {
 
     private static final long serialVersionUID = 8180106062083474626L;

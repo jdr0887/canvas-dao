@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
@@ -17,7 +18,9 @@ import javax.persistence.Table;
 import org.renci.canvas.dao.Persistable;
 
 @Entity
-@Table(schema = "refseq", name = "feature")
+@Table(schema = "refseq", name = "feature", indexes = {
+        @Index(name = "feature_feature_type_type_name_idx", columnList = "feature_type_type_name"),
+        @Index(name = "feature_loc_region_group_id_idx", columnList = "loc_region_group_id") })
 @NamedEntityGraphs({ @NamedEntityGraph(name = "refseq.Feature.includeManyToOnes", attributeNodes = {
         @NamedAttributeNode(value = "regionGroup", subgraph = "regionGroup.includeManyToOnes"),
         @NamedAttributeNode(value = "type") }, subgraphs = { @NamedSubgraph(name = "regionGroup.includeManyToOnes", attributeNodes = {

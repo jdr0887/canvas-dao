@@ -110,6 +110,11 @@ public class LocatedVariantFactoryTest {
                 Arrays.asList(new VariantType("ins")));
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("ins"));
+
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 20763686, "C", "CC", Arrays.asList(new VariantType("ins")));
+        logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("ins"));
+
     }
 
     @Test

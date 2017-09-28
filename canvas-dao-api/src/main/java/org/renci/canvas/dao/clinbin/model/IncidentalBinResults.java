@@ -18,6 +18,7 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 @Entity
 @Table(schema = "clinbin", name = "incidental_bin_results", indexes = {
         @Index(name = "incidental_bin_results_gene_id_idx", columnList = "gene_id"),
+        @Index(name = "incidental_bin_results_zygosity_mode_idx", columnList = "zygosity_mode"),
         @Index(name = "incidental_bin_results_loc_var_id_idx", columnList = "loc_var_id") })
 public class IncidentalBinResults implements Persistable<IncidentalBinResultsPK> {
 

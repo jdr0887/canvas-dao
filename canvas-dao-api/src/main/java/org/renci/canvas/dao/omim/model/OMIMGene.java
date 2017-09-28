@@ -5,20 +5,16 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Type;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType
 @Entity
-@Table(schema = "omim", name = "gene")
+@Table(schema = "omim", name = "gene", indexes = { @Index(name = "gene_otype_idx", columnList = "otype") })
 public class OMIMGene {
 
     @Id
@@ -31,8 +27,9 @@ public class OMIMGene {
     @Column(name = "mixed")
     private Boolean mixed;
 
-    @Column(name = "otype")
-    private Integer otype;
+    @ManyToOne
+    @JoinColumn(name = "otype")
+    private Otype otype;
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
@@ -67,11 +64,11 @@ public class OMIMGene {
         this.mixed = mixed;
     }
 
-    public Integer getOtype() {
+    public Otype getOtype() {
         return otype;
     }
 
-    public void setOtype(Integer otype) {
+    public void setOtype(Otype otype) {
         this.otype = otype;
     }
 
@@ -85,7 +82,7 @@ public class OMIMGene {
 
     @Override
     public String toString() {
-        return String.format("OMIMGene [omimGeneId=%s, version=%s, mixed=%s, otype=%s, name=%s]", omimGeneId, version, mixed, otype, name);
+        return String.format("OMIMGene [omimGeneId=%s, version=%s, mixed=%s, name=%s]", omimGeneId, version, mixed, name);
     }
 
     @Override
@@ -95,7 +92,6 @@ public class OMIMGene {
         result = prime * result + ((mixed == null) ? 0 : mixed.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((omimGeneId == null) ? 0 : omimGeneId.hashCode());
-        result = prime * result + ((otype == null) ? 0 : otype.hashCode());
         result = prime * result + ((version == null) ? 0 : version.hashCode());
         return result;
     }
@@ -123,11 +119,6 @@ public class OMIMGene {
             if (other.omimGeneId != null)
                 return false;
         } else if (!omimGeneId.equals(other.omimGeneId))
-            return false;
-        if (otype == null) {
-            if (other.otype != null)
-                return false;
-        } else if (!otype.equals(other.otype))
             return false;
         if (version == null) {
             if (other.version != null)

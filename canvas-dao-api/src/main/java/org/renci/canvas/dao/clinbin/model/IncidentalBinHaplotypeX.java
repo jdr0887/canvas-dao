@@ -13,6 +13,7 @@ import org.renci.canvas.dao.Persistable;
 @Entity
 @Table(schema = "clinbin", name = "incidental_bin_haplotypex", indexes = {
         @Index(name = "incidental_bin_haplotypex_incidental_bin_id_idx", columnList = "incidental_bin_id"),
+        @Index(name = "incidental_bin_haplotypex_zygosity_mode_idx", columnList = "zygosity_mode"),
         @Index(name = "incidental_bin_haplotypex_phenotype_id_idx", columnList = "phenotype_id") })
 public class IncidentalBinHaplotypeX implements Persistable<IncidentalBinHaplotypeXPK> {
 

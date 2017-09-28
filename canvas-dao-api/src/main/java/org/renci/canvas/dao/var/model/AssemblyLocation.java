@@ -13,7 +13,8 @@ import org.renci.canvas.dao.Persistable;
 import org.renci.canvas.dao.ref.model.GenomeRefSeq;
 
 @Entity
-@Table(schema = "var", name = "asm_loc", indexes = { @Index(name = "asm_loc_asm_id_idx", columnList = "asm_id") })
+@Table(schema = "var", name = "asm_loc", indexes = { @Index(name = "asm_loc_asm_id_idx", columnList = "asm_id"),
+        @Index(name = "asm_loc_ref_ver_accession_idx", columnList = "ref_ver_accession") })
 public class AssemblyLocation implements Persistable<AssemblyLocationPK> {
 
     private static final long serialVersionUID = -6485178807017764493L;

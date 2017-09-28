@@ -16,6 +16,7 @@ import org.renci.canvas.dao.annotation.model.AnnotationGene;
 @Entity
 @Table(schema = "clinbin", name = "incidental_bin_genex", indexes = {
         @Index(name = "incidental_bin_genex_gene_id_idx", columnList = "gene_id"),
+        @Index(name = "incidental_bin_genex_zygosity_mode_idx", columnList = "zygosity_mode"),
         @Index(name = "incidental_bin_genex_incidental_bin_id_idx", columnList = "incidental_bin_id"),
         @Index(name = "incidental_bin_genex_phenotype_id_idx", columnList = "phenotype_id") })
 @NamedEntityGraph(name = "clinbin.IncidentalBinGeneX.includeManyToOnes", attributeNodes = { @NamedAttributeNode(value = "incidentalBin"),

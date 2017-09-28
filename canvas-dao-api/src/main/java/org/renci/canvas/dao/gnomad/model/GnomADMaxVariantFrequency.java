@@ -16,7 +16,7 @@ import org.renci.canvas.dao.var.model.LocatedVariant;
 
 @Entity
 @Table(schema = "gnomad", name = "max_variant_freq", indexes = {
-        @Index(name = "max_variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
+        @Index(name = "gnomad_max_variant_freq_loc_var_id_idx", columnList = "loc_var_id") })
 @NamedEntityGraph(name = "gnomad.GnomADMaxVariantFrequency.includeManyToOnes", attributeNodes = {
         @NamedAttributeNode(value = "locatedVariant") })
 public class GnomADMaxVariantFrequency implements Persistable<GnomADMaxVariantFrequencyPK> {

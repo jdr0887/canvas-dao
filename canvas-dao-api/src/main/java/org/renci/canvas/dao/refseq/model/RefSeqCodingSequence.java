@@ -59,8 +59,8 @@ public class RefSeqCodingSequence implements Persistable<Integer> {
     private String note;
 
     @ManyToMany(targetEntity = RegionGroup.class)
-    @JoinTable(schema = "refseq", name = "cds_locs", indexes = {
-            @Index(name = "cds_locs_refseq_cds_id_idx", columnList = "refseq_cds_id") }, joinColumns = @JoinColumn(name = "refseq_cds_id"), inverseJoinColumns = @JoinColumn(name = "loc_region_group_id"))
+    @JoinTable(schema = "refseq", name = "cds_locs", indexes = { @Index(name = "cds_locs_refseq_cds_id_idx", columnList = "refseq_cds_id"),
+            @Index(name = "cds_locs_loc_region_group_id_idx", columnList = "loc_region_group_id") }, joinColumns = @JoinColumn(name = "refseq_cds_id"), inverseJoinColumns = @JoinColumn(name = "loc_region_group_id"))
     private Set<RegionGroup> locations;
 
     @OneToMany(mappedBy = "refseqCodingSequence")

@@ -5,28 +5,24 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Type;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Phenotype")
-@XmlRootElement(name = "phenotype")
 @Entity
-@Table(schema = "omim", name = "phenotype")
+@Table(schema = "omim", name = "phenotype", indexes = { @Index(name = "phenotype_otype_idx", columnList = "otype") })
 public class Phenotype {
-
-    @Column(name = "version")
-    private Date version;
 
     @Id
     @Column(name = "omim_phenotype_id")
     private Integer omimPhenotypeId;
+
+    @Column(name = "version")
+    private Date version;
 
     @Column(name = "mixed")
     private Boolean mixed;
@@ -36,8 +32,9 @@ public class Phenotype {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "otype")
-    private Integer otype;
+    @ManyToOne
+    @JoinColumn(name = "otype")
+    private Otype otype;
 
     public Phenotype() {
         super();
@@ -75,18 +72,17 @@ public class Phenotype {
         this.title = title;
     }
 
-    public Integer getOtype() {
+    public Otype getOtype() {
         return otype;
     }
 
-    public void setOtype(Integer otype) {
+    public void setOtype(Otype otype) {
         this.otype = otype;
     }
 
     @Override
     public String toString() {
-        return String.format("Phenotype [version=%s, omimPhenotypeId=%s, mixed=%s, title=%s, otype=%s]", version, omimPhenotypeId, mixed,
-                title, otype);
+        return String.format("Phenotype [omimPhenotypeId=%s, version=%s, mixed=%s, title=%s]", omimPhenotypeId, version, mixed, title);
     }
 
     @Override
@@ -95,7 +91,6 @@ public class Phenotype {
         int result = 1;
         result = prime * result + ((mixed == null) ? 0 : mixed.hashCode());
         result = prime * result + ((omimPhenotypeId == null) ? 0 : omimPhenotypeId.hashCode());
-        result = prime * result + ((otype == null) ? 0 : otype.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         result = prime * result + ((version == null) ? 0 : version.hashCode());
         return result;
@@ -119,11 +114,6 @@ public class Phenotype {
             if (other.omimPhenotypeId != null)
                 return false;
         } else if (!omimPhenotypeId.equals(other.omimPhenotypeId))
-            return false;
-        if (otype == null) {
-            if (other.otype != null)
-                return false;
-        } else if (!otype.equals(other.otype))
             return false;
         if (title == null) {
             if (other.title != null)

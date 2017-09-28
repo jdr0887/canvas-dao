@@ -126,17 +126,13 @@ public class LocatedVariantFactoryTest {
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("del"));
 
-        // <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.33" AssemblyStatus="current" Chr="15"
-        // Accession="NC_000015.10" start="48422024" stop="48422025" display_start="48422024" display_stop="48422025" variantLength="2"
-        // referenceAllele="AT" alternateAllele="-" positionVCF="48422023" referenceAlleleVCF="CAT" alternateAlleleVCF="C"/>
-
         locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 48422024, "AT", "", allVariantTypes);
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("del"));
 
-        // <SequenceLocation Assembly="GRCh37" AssemblyAccessionVersion="GCF_000001405.25" AssemblyStatus="previous" Chr="15"
-        // Accession="NC_000015.9" start="48714221" stop="48714222" display_start="48714221" display_stop="48714222" variantLength="2"
-        // referenceAllele="AT" alternateAllele="-" positionVCF="48714220" referenceAlleleVCF="CAT" alternateAlleleVCF="C"/>
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 48422024, "AT", null, allVariantTypes);
+        logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("del"));
 
     }
 

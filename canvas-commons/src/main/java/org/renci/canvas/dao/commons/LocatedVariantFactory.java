@@ -27,6 +27,10 @@ public class LocatedVariantFactory {
                 return null;
             }
 
+            if (alternate == null) {
+                alternate = "";
+            }
+
             if (reference.equals(alternate)) {
                 logger.error("reference and alternate are equal");
                 return null;

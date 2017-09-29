@@ -66,7 +66,6 @@ import org.renci.canvas.dao.onekgen.OneKGenomesSNPPopulationMaxFrequencyDAO;
 import org.renci.canvas.dao.ref.GenomeRefDAO;
 import org.renci.canvas.dao.ref.GenomeRefSeqAlternateIdDAO;
 import org.renci.canvas.dao.ref.GenomeRefSeqDAO;
-import org.renci.canvas.dao.ref.GenomeRefSeqLocationDAO;
 import org.renci.canvas.dao.ref.SequenceTypeDAO;
 import org.renci.canvas.dao.refseq.CDSECNumberDAO;
 import org.renci.canvas.dao.refseq.CDSTranslationExceptionDAO;
@@ -195,9 +194,6 @@ public class CANVASDAOBeanServiceImpl implements CANVASDAOBeanService {
 
     @Autowired
     private GenomeRefSeqAlternateIdDAO genomeRefSeqAlternateIdDAO;
-
-    @Autowired
-    private GenomeRefSeqLocationDAO genomeRefSeqLocationDAO;
 
     @Autowired
     private HGNCGeneDAO HGNCGeneDAO;
@@ -669,14 +665,6 @@ public class CANVASDAOBeanServiceImpl implements CANVASDAOBeanService {
 
     public void setGenomeRefSeqAlternateIdDAO(GenomeRefSeqAlternateIdDAO genomeRefSeqAlternateIdDAO) {
         this.genomeRefSeqAlternateIdDAO = genomeRefSeqAlternateIdDAO;
-    }
-
-    public GenomeRefSeqLocationDAO getGenomeRefSeqLocationDAO() {
-        return genomeRefSeqLocationDAO;
-    }
-
-    public void setGenomeRefSeqLocationDAO(GenomeRefSeqLocationDAO genomeRefSeqLocationDAO) {
-        this.genomeRefSeqLocationDAO = genomeRefSeqLocationDAO;
     }
 
     public HGNCGeneDAO getHGNCGeneDAO() {

@@ -151,8 +151,6 @@ public class TestSchemaExport {
         metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.GenomeRefSeq.class);
         metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.GenomeRefSeqAlternateId.class);
         metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.GenomeRefSeqAlternateIdPK.class);
-        metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.GenomeRefSeqLocation.class);
-        metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.GenomeRefSeqLocationPK.class);
         metadata.addAnnotatedClass(org.renci.canvas.dao.ref.model.SequenceType.class);
         metadata.addAnnotatedClass(org.renci.canvas.dao.refseq.model.CDSECNumber.class);
         metadata.addAnnotatedClass(org.renci.canvas.dao.refseq.model.CDSECNumberPK.class);

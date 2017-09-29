@@ -65,7 +65,6 @@ import org.renci.canvas.dao.onekgen.OneKGenomesSNPPopulationMaxFrequencyDAO;
 import org.renci.canvas.dao.ref.GenomeRefDAO;
 import org.renci.canvas.dao.ref.GenomeRefSeqAlternateIdDAO;
 import org.renci.canvas.dao.ref.GenomeRefSeqDAO;
-import org.renci.canvas.dao.ref.GenomeRefSeqLocationDAO;
 import org.renci.canvas.dao.ref.SequenceTypeDAO;
 import org.renci.canvas.dao.refseq.CDSECNumberDAO;
 import org.renci.canvas.dao.refseq.CDSTranslationExceptionDAO;
@@ -357,10 +356,6 @@ public interface CANVASDAOBeanService {
     public GenomeRefSeqAlternateIdDAO getGenomeRefSeqAlternateIdDAO();
 
     public void setGenomeRefSeqAlternateIdDAO(GenomeRefSeqAlternateIdDAO genomeRefSeqAlternateIdDAO);
-
-    public GenomeRefSeqLocationDAO getGenomeRefSeqLocationDAO();
-
-    public void setGenomeRefSeqLocationDAO(GenomeRefSeqLocationDAO genomeRefSeqLocationDAO);
 
     public FeatureDAO getFeatureDAO();
 

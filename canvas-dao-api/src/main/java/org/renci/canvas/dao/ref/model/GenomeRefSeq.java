@@ -10,7 +10,6 @@ import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.renci.canvas.dao.Persistable;
@@ -38,9 +37,6 @@ public class GenomeRefSeq implements Persistable<String> {
 
     @ManyToMany(mappedBy = "genomeRefSeqs", fetch = FetchType.LAZY)
     private Set<GenomeRef> genomeRefs;
-
-    @OneToMany(mappedBy = "genomeRefSeq", fetch = FetchType.LAZY)
-    private Set<GenomeRefSeqLocation> locations;
 
     public GenomeRefSeq() {
         super();
@@ -91,14 +87,6 @@ public class GenomeRefSeq implements Persistable<String> {
 
     public void setGenomeRefs(Set<GenomeRef> genomeRefs) {
         this.genomeRefs = genomeRefs;
-    }
-
-    public Set<GenomeRefSeqLocation> getLocations() {
-        return locations;
-    }
-
-    public void setLocations(Set<GenomeRefSeqLocation> locations) {
-        this.locations = locations;
     }
 
     @Override

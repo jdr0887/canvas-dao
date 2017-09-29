@@ -113,7 +113,6 @@
   <bean id="genomeRefDAOImpl" class="org.renci.canvas.dao.jpa.ref.GenomeRefDAOImpl" ext:field-injection="true"></bean>
   <bean id="genomeRefSeqDAOImpl" class="org.renci.canvas.dao.jpa.ref.GenomeRefSeqDAOImpl" ext:field-injection="true"></bean>
   <bean id="genomeRefSeqAlternateIdDAOImpl" class="org.renci.canvas.dao.jpa.ref.GenomeRefSeqAlternateIdDAOImpl" ext:field-injection="true"></bean>
-  <bean id="genomeRefSeqLocationDAOImpl" class="org.renci.canvas.dao.jpa.ref.GenomeRefSeqLocationDAOImpl" ext:field-injection="true"></bean>
   <bean id="sequenceTypeDAOImpl" class="org.renci.canvas.dao.jpa.ref.SequenceTypeDAOImpl" ext:field-injection="true"></bean>
   <bean id="featureDAOImpl" class="org.renci.canvas.dao.jpa.refseq.FeatureDAOImpl" ext:field-injection="true"></bean>
   <bean id="locationTypeDAOImpl" class="org.renci.canvas.dao.jpa.refseq.LocationTypeDAOImpl" ext:field-injection="true"></bean>
@@ -213,7 +212,6 @@
     <property name="genomeRefDAO" ref="genomeRefDAOImpl" />
     <property name="genomeRefSeqDAO" ref="genomeRefSeqDAOImpl" />
     <property name="genomeRefSeqAlternateIdDAO" ref="genomeRefSeqAlternateIdDAOImpl" />
-    <property name="genomeRefSeqLocationDAO" ref="genomeRefSeqLocationDAOImpl" />
     <property name="sequenceTypeDAO" ref="sequenceTypeDAOImpl" />
     <property name="featureDAO" ref="featureDAOImpl" />
     <property name="locationTypeDAO" ref="locationTypeDAOImpl" />
@@ -312,7 +310,6 @@
   <service ref="genomeRefDAOImpl" interface="org.renci.canvas.dao.ref.GenomeRefDAO" />
   <service ref="genomeRefSeqDAOImpl" interface="org.renci.canvas.dao.ref.GenomeRefSeqDAO" />
   <service ref="genomeRefSeqAlternateIdDAOImpl" interface="org.renci.canvas.dao.ref.GenomeRefSeqAlternateIdDAO" />
-  <service ref="genomeRefSeqLocationDAOImpl" interface="org.renci.canvas.dao.ref.GenomeRefSeqLocationDAO" />
   <service ref="sequenceTypeDAOImpl" interface="org.renci.canvas.dao.ref.SequenceTypeDAO" />
   <service ref="featureDAOImpl" interface="org.renci.canvas.dao.refseq.FeatureDAO" />
   <service ref="locationTypeDAOImpl" interface="org.renci.canvas.dao.refseq.LocationTypeDAO" />

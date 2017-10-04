@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.renci.canvas</groupId>
   <artifactId>canvas-dao</artifactId>
-  <version>0.1.14</version>
+  <version>0.1.15-SNAPSHOT</version>
   <packaging>pom</packaging>
   <properties>
     <maven.site.plugin.skip>false</maven.site.plugin.skip>
@@ -28,19 +28,19 @@
     <url>https://github.com/jdr0887/canvas-dao</url>
     <developerConnection>scm:git:git@github.com:jdr0887/canvas-dao.git</developerConnection>
     <connection>scm:git:git@github.com:jdr0887/canvas-dao.git</connection>
-    <tag>canvas-dao-0.1.14</tag>
+    <tag>HEAD</tag>
   </scm>
   <dependencyManagement>
     <dependencies>
       <dependency>
 	<groupId>org.renci.canvas.canvas-dao</groupId>
 	<artifactId>canvas-dao-api</artifactId>
-      	<version>0.1.14</version>	
+      	<version>0.1.15-SNAPSHOT</version>	
       </dependency>
       <dependency>
 	<groupId>org.renci.canvas.canvas-dao</groupId>
 	<artifactId>canvas-dao-jpa</artifactId>
-      	<version>0.1.14</version>	
+      	<version>0.1.15-SNAPSHOT</version>	
       </dependency>
     </dependencies>
   </dependencyManagement>

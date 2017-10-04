@@ -1,14 +1,15 @@
 package org.renci.canvas.dao.clinvar.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -44,12 +45,12 @@ public class SubmissionClinicalAssertion implements Persistable<Long> {
     @Column(name = "assertion")
     private String assertion;
 
-    @ManyToOne
-    @JoinColumn(name = "assertion_fid")
-    private ReferenceClinicalAssertion referenceClinicalAssertion;
+    @ManyToMany(mappedBy = "submissionClinicalAssertions")
+    private Set<ReferenceClinicalAssertion> referenceClinicalAssertions;
 
     public SubmissionClinicalAssertion() {
         super();
+        this.referenceClinicalAssertions = new HashSet<>();
     }
 
     public Long getId() {
@@ -100,12 +101,12 @@ public class SubmissionClinicalAssertion implements Persistable<Long> {
         this.assertion = assertion;
     }
 
-    public ReferenceClinicalAssertion getReferenceClinicalAssertion() {
-        return referenceClinicalAssertion;
+    public Set<ReferenceClinicalAssertion> getReferenceClinicalAssertions() {
+        return referenceClinicalAssertions;
     }
 
-    public void setReferenceClinicalAssertion(ReferenceClinicalAssertion referenceClinicalAssertion) {
-        this.referenceClinicalAssertion = referenceClinicalAssertion;
+    public void setReferenceClinicalAssertions(Set<ReferenceClinicalAssertion> referenceClinicalAssertions) {
+        this.referenceClinicalAssertions = referenceClinicalAssertions;
     }
 
     @Override

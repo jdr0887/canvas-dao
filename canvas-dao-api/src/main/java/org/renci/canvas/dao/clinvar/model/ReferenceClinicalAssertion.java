@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -89,18 +88,19 @@ public class ReferenceClinicalAssertion implements Persistable<Long> {
     @JoinColumn(name = "trait_set_id")
     private TraitSet traitSet;
 
-    @OneToMany(mappedBy = "referenceClinicalAssertion", fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = SubmissionClinicalAssertion.class, cascade = { CascadeType.MERGE,
+            CascadeType.PERSIST }, fetch = FetchType.EAGER)
+    @JoinTable(schema = "clinvar", name = "reference_clinical_assertions_submission_clinical_assertion", inverseJoinColumns = @JoinColumn(name = "submission_clinical_assertion_fid", referencedColumnName = "id"), joinColumns = @JoinColumn(name = "reference_clinical_assertions_assertion_fid", referencedColumnName = "assertion_id"))
     private Set<SubmissionClinicalAssertion> submissionClinicalAssertions;
 
     @ManyToMany(targetEntity = ClinVarVersion.class, cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
-    @JoinTable(schema = "clinvar", name = "version_accession_map", indexes = {
-            @Index(name = "version_accession_map_clinvar_version_id_idx", columnList = "clinvar_version_id"),
-            @Index(name = "version_accession_map_clinvar_ref_assertion_id_idx", columnList = "clinvar_ref_assertion_id") }, inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
+    @JoinTable(schema = "clinvar", name = "version_accession_map", inverseJoinColumns = @JoinColumn(name = "clinvar_version_id", referencedColumnName = "clinvar_version_id"), joinColumns = @JoinColumn(name = "clinvar_ref_assertion_id", referencedColumnName = "assertion_id"))
     private Set<ClinVarVersion> versions;
 
     public ReferenceClinicalAssertion() {
         super();
         this.versions = new HashSet<>();
+        this.submissionClinicalAssertions = new HashSet<>();
     }
 
     public Long getId() {

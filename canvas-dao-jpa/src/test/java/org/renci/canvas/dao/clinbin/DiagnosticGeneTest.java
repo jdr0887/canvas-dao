@@ -127,7 +127,7 @@ public class DiagnosticGeneTest {
 
                         List<AnnotationGeneExternalId> filteredExternals = externals.stream()
                                 .filter(b -> "refseq".equals(b.getId().getNamespace())
-                                        && latestDiagnosticResultVersion.getRefseqVersion().toString().equals(b.getId().getNamespaceVer()))
+                                        && latestDiagnosticResultVersion.getRefseqVersion().toString().equals(b.getNamespaceVersion()))
                                 .collect(Collectors.toList());
 
                         if (CollectionUtils.isNotEmpty(filteredExternals)) {

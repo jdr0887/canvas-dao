@@ -116,8 +116,7 @@ public class AnnotationGeneExternalIdDAOImpl extends BaseDAOImpl<AnnotationGeneE
             Root<AnnotationGeneExternalId> root = crit.from(getPersistentClass());
             List<Predicate> predicates = new ArrayList<Predicate>();
             predicates.add(critBuilder.equal(root.get(AnnotationGeneExternalId_.id).get(AnnotationGeneExternalIdPK_.namespace), namespace));
-            predicates
-                    .add(critBuilder.equal(root.get(AnnotationGeneExternalId_.id).get(AnnotationGeneExternalIdPK_.namespaceVer), version));
+            predicates.add(critBuilder.equal(root.get(AnnotationGeneExternalId_.namespaceVersion), version));
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             crit.distinct(true);
             TypedQuery<AnnotationGeneExternalId> query = getEntityManager().createQuery(crit).setHint("javax.persistence.fetchgraph",

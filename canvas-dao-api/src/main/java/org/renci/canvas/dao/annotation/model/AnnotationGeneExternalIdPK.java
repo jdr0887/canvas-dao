@@ -19,12 +19,8 @@ public class AnnotationGeneExternalIdPK implements Serializable {
     @Column(name = "namespace", length = 31)
     private String namespace;
 
-    @Column(name = "namespace_ver", length = 31)
-    private String namespaceVer;
-
     public AnnotationGeneExternalIdPK() {
         super();
-        this.namespaceVer = "";
     }
 
     public AnnotationGeneExternalIdPK(Integer externalId, Integer gene, String namespace) {
@@ -36,7 +32,6 @@ public class AnnotationGeneExternalIdPK implements Serializable {
 
     public AnnotationGeneExternalIdPK(Integer externalId, Integer gene, String namespace, String namespaceVer) {
         this(externalId, gene, namespace);
-        this.namespaceVer = namespaceVer;
     }
 
     public Integer getExternalId() {
@@ -63,18 +58,10 @@ public class AnnotationGeneExternalIdPK implements Serializable {
         this.namespace = namespace;
     }
 
-    public String getNamespaceVer() {
-        return namespaceVer;
-    }
-
-    public void setNamespaceVer(String namespaceVer) {
-        this.namespaceVer = namespaceVer;
-    }
-
     @Override
     public String toString() {
-        return String.format("AnnotationGeneExternalIdPK [externalId=%s, gene=%s, namespace=%s, namespaceVer=%s]", externalId, gene,
-                namespace, namespaceVer);
+        return String.format("AnnotationGeneExternalIdPK [externalId=%s, gene=%s, namespace=%s]", externalId, gene,
+                namespace);
     }
 
     @Override
@@ -84,7 +71,6 @@ public class AnnotationGeneExternalIdPK implements Serializable {
         result = prime * result + ((externalId == null) ? 0 : externalId.hashCode());
         result = prime * result + ((gene == null) ? 0 : gene.hashCode());
         result = prime * result + ((namespace == null) ? 0 : namespace.hashCode());
-        result = prime * result + ((namespaceVer == null) ? 0 : namespaceVer.hashCode());
         return result;
     }
 
@@ -111,11 +97,6 @@ public class AnnotationGeneExternalIdPK implements Serializable {
             if (other.namespace != null)
                 return false;
         } else if (!namespace.equals(other.namespace))
-            return false;
-        if (namespaceVer == null) {
-            if (other.namespaceVer != null)
-                return false;
-        } else if (!namespaceVer.equals(other.namespaceVer))
             return false;
         return true;
     }

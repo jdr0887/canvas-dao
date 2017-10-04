@@ -1,5 +1,6 @@
 package org.renci.canvas.dao.annotation.model;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Index;
@@ -27,6 +28,9 @@ public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExter
     @JoinColumn(name = "gene_id")
     private AnnotationGene gene;
 
+    @Column(name = "namespace_ver", length = 31)
+    private String namespaceVersion;
+
     public AnnotationGeneExternalId() {
         super();
     }
@@ -44,6 +48,14 @@ public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExter
         this.id = id;
     }
 
+    public String getNamespaceVersion() {
+        return namespaceVersion;
+    }
+
+    public void setNamespaceVersion(String namespaceVersion) {
+        this.namespaceVersion = namespaceVersion;
+    }
+
     public AnnotationGene getGene() {
         return gene;
     }
@@ -54,7 +66,7 @@ public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExter
 
     @Override
     public String toString() {
-        return String.format("AnnotationGeneExternalIds [id=%s]", id);
+        return String.format("AnnotationGeneExternalId [id=%s, namespaceVersion=%s]", id, namespaceVersion);
     }
 
     @Override
@@ -62,6 +74,7 @@ public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExter
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((namespaceVersion == null) ? 0 : namespaceVersion.hashCode());
         return result;
     }
 
@@ -78,6 +91,11 @@ public class AnnotationGeneExternalId implements Persistable<AnnotationGeneExter
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
+            return false;
+        if (namespaceVersion == null) {
+            if (other.namespaceVersion != null)
+                return false;
+        } else if (!namespaceVersion.equals(other.namespaceVersion))
             return false;
         return true;
     }

@@ -152,7 +152,7 @@ public class DiagnosticGeneDAOImpl extends BaseDAOImpl<DiagnosticGene, Integer> 
 
             predicates.add(critBuilder.equal(annotationGene2AnnotationGeneExternalIdJoin.join(AnnotationGeneExternalId_.id)
                     .get(AnnotationGeneExternalIdPK_.namespace), namespace));
-            predicates.add(critBuilder.equal(annotationGene2AnnotationGeneExternalIdJoin.join(AnnotationGeneExternalId_.namespaceVersion),
+            predicates.add(critBuilder.equal(annotationGene2AnnotationGeneExternalIdJoin.get(AnnotationGeneExternalId_.namespaceVersion),
                     version));
 
             Join<DX, DiagnosticGeneGroupVersion> dxDiagnosticGeneGroupVersionJoin = root.join(DiagnosticGene_.dx)

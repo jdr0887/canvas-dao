@@ -37,4 +37,8 @@ public interface BinResultsFinalDiagnosticDAO extends BaseDAO<BinResultsFinalDia
     public List<BinResultsFinalDiagnostic> findByKeyAndClinVarDiseaseClassId(BinResultsFinalDiagnosticPK key, Integer diseaseClassId)
             throws CANVASDAOException;
 
+    public Long findNullClinVarDiseaseClassCount(DiagnosticBinningJob diagnosticBinningJob) throws CANVASDAOException;
+
+    public Long findNullHGMDDiseaseClassCount(DiagnosticBinningJob diagnosticBinningJob) throws CANVASDAOException;
+
 }

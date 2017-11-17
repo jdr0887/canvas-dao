@@ -56,4 +56,6 @@ public interface Variants_80_4_DAO extends BaseDAO<Variants_80_4, Variants_80_4P
 
     public void deleteByLocatedVariantId(Long id) throws CANVASDAOException;
 
+    public void deleteByLocatedVariantIdList(List<Long> id) throws CANVASDAOException;
+
 }

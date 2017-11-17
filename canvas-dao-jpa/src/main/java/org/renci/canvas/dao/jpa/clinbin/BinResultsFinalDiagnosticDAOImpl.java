@@ -50,6 +50,59 @@ public class BinResultsFinalDiagnosticDAOImpl extends BaseDAOImpl<BinResultsFina
     }
 
     @Override
+    public Long findNullClinVarDiseaseClassCount(DiagnosticBinningJob diagnosticBinningJob) throws CANVASDAOException {
+        logger.debug("ENTERING findNullClinVarDiseaseClassCount(DiagnosticBinningJob)");
+        Long ret = 0L;
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Long> crit = critBuilder.createQuery(Long.class);
+            Root<BinResultsFinalDiagnostic> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.dx).get(DX_.id), diagnosticBinningJob.getDx().getId()));
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.diagnosticResultVersion).get(DiagnosticResultVersion_.id),
+                    diagnosticBinningJob.getDiagnosticResultVersion().getId()));
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.id).get(BinResultsFinalDiagnosticPK_.participant),
+                    diagnosticBinningJob.getParticipant()));
+            predicates.add(critBuilder.isNull(root.get(BinResultsFinalDiagnostic_.clinvarDiseaseClass)));
+
+            crit.select(critBuilder.count(root.get(BinResultsFinalDiagnostic_.id).get(BinResultsFinalDiagnosticPK_.participant)));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<Long> query = getEntityManager().createQuery(crit);
+            ret = query.getSingleResult();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public Long findNullHGMDDiseaseClassCount(DiagnosticBinningJob diagnosticBinningJob) throws CANVASDAOException {
+        logger.debug("ENTERING findNullHGMDDiseaseClassCount(DiagnosticBinningJob)");
+        Long ret = 0L;
+        try {
+            CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
+            CriteriaQuery<Long> crit = critBuilder.createQuery(Long.class);
+            Root<BinResultsFinalDiagnostic> root = crit.from(getPersistentClass());
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.dx).get(DX_.id), diagnosticBinningJob.getDx().getId()));
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.diagnosticResultVersion).get(DiagnosticResultVersion_.id),
+                    diagnosticBinningJob.getDiagnosticResultVersion().getId()));
+            predicates.add(critBuilder.equal(root.get(BinResultsFinalDiagnostic_.id).get(BinResultsFinalDiagnosticPK_.participant),
+                    diagnosticBinningJob.getParticipant()));
+            predicates.add(critBuilder.isNull(root.get(BinResultsFinalDiagnostic_.hgmdDiseaseClass)));
+
+            crit.select(critBuilder.count(root.get(BinResultsFinalDiagnostic_.id).get(BinResultsFinalDiagnosticPK_.participant)));
+            crit.where(predicates.toArray(new Predicate[predicates.size()]));
+            TypedQuery<Long> query = getEntityManager().createQuery(crit);
+            ret = query.getSingleResult();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    @Override
     public List<BinResultsFinalDiagnostic> findByKeyAndHGMDDiseaseClassId(BinResultsFinalDiagnosticPK id, Integer diseaseClassId)
             throws CANVASDAOException {
         logger.debug("ENTERING findByKeyAndHGMDDiseaseClassId(BinResultsFinalDiagnosticPK, Integer)");

@@ -904,4 +904,14 @@ public class Variants_80_4_DAOImpl extends BaseDAOImpl<Variants_80_4, Variants_8
         qDelete.executeUpdate();
     }
 
+    @org.springframework.transaction.annotation.Transactional
+    @javax.transaction.Transactional
+    @Override
+    public void deleteByLocatedVariantIdList(List<Long> locatedVariantId) throws CANVASDAOException {
+        Query qDelete = getEntityManager()
+                .createQuery("delete from " + getPersistentClass().getSimpleName() + " a where a.locatedVariant.id = :locatedVariantId");
+        qDelete.setParameter("locatedVariantId", locatedVariantId);
+        qDelete.executeUpdate();
+    }
+
 }

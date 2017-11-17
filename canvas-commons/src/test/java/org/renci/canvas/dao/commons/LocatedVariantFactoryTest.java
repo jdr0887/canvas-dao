@@ -106,12 +106,28 @@ public class LocatedVariantFactoryTest {
     public void testCreateInsertion() throws Exception {
         GenomeRef genomeRef = null;
         GenomeRefSeq genomeRefSeq = null;
-        LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 1891654, "CAGAGA", "CAGAGAGAGA",
-                Arrays.asList(new VariantType("ins")));
+
+        LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 1891654, "CAGAGA", "CAGAGAGAGA", allVariantTypes);
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("ins"));
 
-        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 20763686, "C", "CC", Arrays.asList(new VariantType("ins")));
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 20763686, "C", "CC", allVariantTypes);
+        logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("ins"));
+
+        // <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.33" AssemblyStatus="current" Chr="1"
+        // Accession="NC_000001.11" start="3835081" stop="3835082" display_start="3835081" display_stop="3835082" variantLength="1"
+        // referenceAllele="-" alternateAllele="A" positionVCF="3835081" referenceAlleleVCF="G" alternateAlleleVCF="GA"/>
+
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 3835081, "G", "GA", allVariantTypes);
+        logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("ins"));
+
+        // <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.33" AssemblyStatus="current" Chr="1"
+        // Accession="NC_000001.11" start="7663429" stop="7663430" display_start="7663429" display_stop="7663430" variantLength="2"
+        // referenceAllele="-" alternateAllele="CG" positionVCF="7663429" referenceAlleleVCF="A" alternateAlleleVCF="ACG"/>
+
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 7663429, "", "CG", allVariantTypes);
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("ins"));
 
@@ -121,6 +137,7 @@ public class LocatedVariantFactoryTest {
     public void testCreateDeletion() throws Exception {
         GenomeRef genomeRef = null;
         GenomeRefSeq genomeRefSeq = null;
+
         LocatedVariant locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 3021843, "CAGAAGAA", "CAGAA",
                 Arrays.asList(new VariantType("del")));
         logger.info(locVar.toString());
@@ -131,6 +148,13 @@ public class LocatedVariantFactoryTest {
         assertTrue(locVar.getVariantType().getId().equals("del"));
 
         locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 48422024, "AT", null, allVariantTypes);
+        logger.info(locVar.toString());
+        assertTrue(locVar.getVariantType().getId().equals("del"));
+
+        // <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.33" AssemblyStatus="current" Chr="1"
+        // Accession="NC_000001.11" start="1043224" stop="1043225" display_start="1043224" display_stop="1043225" variantLength="2"
+        // referenceAllele="CT" alternateAllele="-" positionVCF="1043223" referenceAlleleVCF="CCT" alternateAlleleVCF="C"/>
+        locVar = LocatedVariantFactory.create(genomeRef, genomeRefSeq, 1043224, "CT", null, allVariantTypes);
         logger.info(locVar.toString());
         assertTrue(locVar.getVariantType().getId().equals("del"));
 

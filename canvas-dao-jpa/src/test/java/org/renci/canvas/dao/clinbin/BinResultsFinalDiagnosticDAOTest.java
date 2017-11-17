@@ -13,7 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.renci.canvas.dao.CANVASDAOException;
 import org.renci.canvas.dao.clinbin.model.BinResultsFinalDiagnostic;
+import org.renci.canvas.dao.clinbin.model.DiagnosticBinningJob;
 import org.renci.canvas.dao.jpa.clinbin.BinResultsFinalDiagnosticDAOImpl;
+import org.renci.canvas.dao.jpa.clinbin.DiagnosticBinningJobDAOImpl;
 
 public class BinResultsFinalDiagnosticDAOTest {
 
@@ -62,6 +64,46 @@ public class BinResultsFinalDiagnosticDAOTest {
     }
 
     @Test
+    public void testFindNullClinVarDiseaseClass() {
+        try {
+
+            DiagnosticBinningJobDAOImpl diagnosticBinningJobDAO = new DiagnosticBinningJobDAOImpl();
+            diagnosticBinningJobDAO.setEntityManager(em);
+
+            DiagnosticBinningJob diagnosticBinningJob = diagnosticBinningJobDAO.findById(5042);
+
+            BinResultsFinalDiagnosticDAOImpl binResultsFinalDiagnosticDAO = new BinResultsFinalDiagnosticDAOImpl();
+            binResultsFinalDiagnosticDAO.setEntityManager(em);
+
+            Long ret = binResultsFinalDiagnosticDAO.findNullClinVarDiseaseClassCount(diagnosticBinningJob);
+            assertTrue(ret != null);
+            assertTrue(ret == 0);
+        } catch (CANVASDAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testFindNullHGMDDiseaseClass() {
+        try {
+
+            DiagnosticBinningJobDAOImpl diagnosticBinningJobDAO = new DiagnosticBinningJobDAOImpl();
+            diagnosticBinningJobDAO.setEntityManager(em);
+
+            DiagnosticBinningJob diagnosticBinningJob = diagnosticBinningJobDAO.findById(5042);
+
+            BinResultsFinalDiagnosticDAOImpl binResultsFinalDiagnosticDAO = new BinResultsFinalDiagnosticDAOImpl();
+            binResultsFinalDiagnosticDAO.setEntityManager(em);
+
+            Long ret = binResultsFinalDiagnosticDAO.findNullHGMDDiseaseClassCount(diagnosticBinningJob);
+            assertTrue(ret != null);
+            assertTrue(ret == 0);
+        } catch (CANVASDAOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testFindAnalyzedVariantsCount() {
         try {
             BinResultsFinalDiagnosticDAOImpl binResultsFinalDiagnosticDAO = new BinResultsFinalDiagnosticDAOImpl();
@@ -71,7 +113,7 @@ public class BinResultsFinalDiagnosticDAOTest {
             Long ret = binResultsFinalDiagnosticDAO.findAnalyzedVariantsCount("NCX_00004");
             assertTrue(ret != null);
             System.out.println(ret.toString());
-            
+
         } catch (CANVASDAOException e) {
             e.printStackTrace();
         }
@@ -82,7 +124,7 @@ public class BinResultsFinalDiagnosticDAOTest {
         try {
             BinResultsFinalDiagnosticDAOImpl binResultsFinalDiagnosticDAO = new BinResultsFinalDiagnosticDAOImpl();
             binResultsFinalDiagnosticDAO.setEntityManager(em);
-            
+
             Long class1 = binResultsFinalDiagnosticDAO.findByAssemblyIdAndHGMDDiseaseClassId(36355, 1);
             assertTrue(class1 != null);
             System.out.println(class1.toString());
@@ -106,7 +148,7 @@ public class BinResultsFinalDiagnosticDAOTest {
             Long class6 = binResultsFinalDiagnosticDAO.findByAssemblyIdAndHGMDDiseaseClassId(36355, 6);
             assertTrue(class6 != null);
             System.out.println(class6.toString());
-            
+
         } catch (CANVASDAOException e) {
             e.printStackTrace();
         }
@@ -141,8 +183,7 @@ public class BinResultsFinalDiagnosticDAOTest {
             Long class6 = binResultsFinalDiagnosticDAO.findByAssemblyIdAndClinVarDiseaseClassId(36355, 6);
             assertTrue(class6 != null);
             System.out.println(class6.toString());
-            
-            
+
         } catch (CANVASDAOException e) {
             e.printStackTrace();
         }

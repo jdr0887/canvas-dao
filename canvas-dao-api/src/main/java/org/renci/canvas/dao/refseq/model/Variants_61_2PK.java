@@ -46,6 +46,17 @@ public class Variants_61_2PK implements Serializable {
     }
 
     public Variants_61_2PK(Long locatedVariant, String genomeRefSeq, Integer position, String variantType, String transcript,
+            Integer mapNumber) {
+        super();
+        this.locatedVariant = locatedVariant;
+        this.genomeRefSeq = genomeRefSeq;
+        this.position = position;
+        this.variantType = variantType;
+        this.transcript = transcript;
+        this.mapNumber = mapNumber;
+    }
+
+    public Variants_61_2PK(Long locatedVariant, String genomeRefSeq, Integer position, String variantType, String transcript,
             String locationType, String variantEffect, Integer mapNumber) {
         super();
         this.locatedVariant = locatedVariant;

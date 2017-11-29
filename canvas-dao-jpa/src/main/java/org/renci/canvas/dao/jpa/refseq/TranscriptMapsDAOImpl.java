@@ -181,7 +181,6 @@ public class TranscriptMapsDAOImpl extends BaseDAOImpl<TranscriptMaps, Integer> 
     @Override
     public List<TranscriptMaps> findByGenomeRefIdAndRefSeqVersionAndGenomeRefSeqAccessionAndInExonRange(Integer genomeRefId,
             String refseqVersion, String refSeqAccession, Integer position) throws CANVASDAOException {
-        // this get crazy...you've been warned
         List<TranscriptMaps> ret = new ArrayList<TranscriptMaps>();
         try {
 
@@ -207,36 +206,7 @@ public class TranscriptMapsDAOImpl extends BaseDAOImpl<TranscriptMaps, Integer> 
             predicates.add(critBuilder.between(critBuilder.literal(position), root.get(TranscriptMaps_.minContig),
                     root.get(TranscriptMaps_.maxContig)));
 
-            // Join<TranscriptMaps, TranscriptMapsExons> plusContigStartTranscriptMapsTranscriptMapsExonsJoin = root
-            // .join(TranscriptMaps_.exons);
-            //
-            // Subquery<Integer> plusContigStartSubquery = crit.subquery(Integer.class);
-            // Root<TranscriptMapsExons> plusContigStartFromTranscriptMapsExons = plusContigStartSubquery.from(TranscriptMapsExons.class);
-            // plusContigStartSubquery
-            // .where(critBuilder.equal(plusContigStartTranscriptMapsTranscriptMapsExonsJoin.get(TranscriptMapsExons_.id),
-            // plusContigStartFromTranscriptMapsExons.get(TranscriptMapsExons_.id)));
-            // plusContigStartSubquery.select(critBuilder.min(plusContigStartFromTranscriptMapsExons.get(TranscriptMapsExons_.contigStart)));
-            //
-            // Join<TranscriptMaps, TranscriptMapsExons> plusContigEndtranscriptMapsTranscriptMapsExonsJoin =
-            // root.join(TranscriptMaps_.exons);
-            // Subquery<Integer> plusContigEndSubquery = crit.subquery(Integer.class);
-            // Root<TranscriptMapsExons> plusContigEndFromTranscriptMapsExons = plusContigEndSubquery.from(TranscriptMapsExons.class);
-            // plusContigEndSubquery.where(critBuilder.equal(plusContigEndtranscriptMapsTranscriptMapsExonsJoin.get(TranscriptMapsExons_.id),
-            // plusContigEndFromTranscriptMapsExons.get(TranscriptMapsExons_.id)));
-            // plusContigEndSubquery.select(critBuilder.max(plusContigEndFromTranscriptMapsExons.get(TranscriptMapsExons_.contigEnd)));
-            //
-            // Predicate betweenContigStartAndEndPredicate = critBuilder.between(critBuilder.literal(position), plusContigStartSubquery,
-            // plusContigEndSubquery);
-
-            // Predicate left = critBuilder.and(critBuilder
-            // .equal(critBuilder.function("refseq_strand_to_varchar", String.class, root.get(TranscriptMaps_.strand)),
-            // "+"),
-            // betweenContigStartAndEndPredicate);
-
-            // Predicate left = critBuilder.and(critBuilder.equal(root.get(TranscriptMaps_.strand), "+"),
-            // betweenContigStartAndEndPredicate);
-            //
-            // predicates.add(left);
+            crit.orderBy(critBuilder.asc(root.get(TranscriptMaps_.mapCount)));
 
             crit.where(predicates.toArray(new Predicate[predicates.size()]));
             crit.distinct(true);
@@ -246,64 +216,6 @@ public class TranscriptMapsDAOImpl extends BaseDAOImpl<TranscriptMaps, Integer> 
         } catch (Exception e) {
             throw new CANVASDAOException(e);
         }
-
-        // try {
-        // CriteriaBuilder critBuilder = getEntityManager().getCriteriaBuilder();
-        // CriteriaQuery<TranscriptMaps> crit = critBuilder.createQuery(getPersistentClass());
-        // Root<TranscriptMaps> root = crit.from(getPersistentClass());
-        // List<Predicate> predicates = new ArrayList<Predicate>();
-        //
-        // predicates.add(critBuilder.equal(root.get(TranscriptMaps_.genomeRef).get(GenomeRef_.id), genomeRefId));
-        //
-        // Join<TranscriptMaps, Transcript> transcriptMapsTranscriptJoin = root.join(TranscriptMaps_.transcript);
-        // Join<Transcript, TranscriptRefSeqVersion> transcriptTranscriptRefSeqVersJoin = transcriptMapsTranscriptJoin
-        // .join(Transcript_.refseqVersions);
-        // predicates.add(critBuilder.equal(
-        // transcriptTranscriptRefSeqVersJoin.get(TranscriptRefSeqVersion_.id).get(TranscriptRefSeqVersionPK_.refseqVersion),
-        // refseqVersion));
-        //
-        // Join<TranscriptMaps, GenomeRefSeq> transcriptMapsGenomeRefSeqJoin = root.join(TranscriptMaps_.genomeRefSeq);
-        // predicates.add(critBuilder.equal(transcriptMapsGenomeRefSeqJoin.get(GenomeRefSeq_.id), refSeqAccession));
-        //
-        // Join<TranscriptMaps, TranscriptMapsExons> minusContigStartTranscriptMapsTranscriptMapsExonsJoin = root
-        // .join(TranscriptMaps_.exons);
-        // Subquery<Integer> minusContigStartSubquery = crit.subquery(Integer.class);
-        // Root<TranscriptMapsExons> minusContigStartFromTranscriptMapsExons = minusContigStartSubquery.from(TranscriptMapsExons.class);
-        // minusContigStartSubquery
-        // .where(critBuilder.equal(minusContigStartTranscriptMapsTranscriptMapsExonsJoin.get(TranscriptMapsExons_.id),
-        // minusContigStartFromTranscriptMapsExons.get(TranscriptMapsExons_.id)));
-        // minusContigStartSubquery.select(critBuilder.max(minusContigStartFromTranscriptMapsExons.get(TranscriptMapsExons_.contigStart)));
-        //
-        // Join<TranscriptMaps, TranscriptMapsExons> minusContigEndTranscriptMapsTranscriptMapsExonsJoin = root
-        // .join(TranscriptMaps_.exons);
-        // Subquery<Integer> minusContigEndSubquery = crit.subquery(Integer.class);
-        // Root<TranscriptMapsExons> minusContigEndFromTranscriptMapsExons = minusContigEndSubquery.from(TranscriptMapsExons.class);
-        // minusContigEndSubquery.where(critBuilder.equal(minusContigEndTranscriptMapsTranscriptMapsExonsJoin.get(TranscriptMapsExons_.id),
-        // minusContigEndFromTranscriptMapsExons.get(TranscriptMapsExons_.id)));
-        // minusContigEndSubquery.select(critBuilder.min(minusContigEndFromTranscriptMapsExons.get(TranscriptMapsExons_.contigEnd)));
-        //
-        // Predicate betweenContigEndAndStartPredicate = critBuilder.between(critBuilder.literal(position), minusContigEndSubquery,
-        // minusContigStartSubquery);
-        //
-        // // Predicate right = critBuilder.and(critBuilder
-        // // .equal(critBuilder.function("refseq_strand_to_varchar", String.class, root.get(TranscriptMaps_.strand)),
-        // // "-"),
-        // // betweenContigEndAndStartPredicate);
-        //
-        // Predicate right = critBuilder.and(critBuilder.equal(root.get(TranscriptMaps_.strand), "-"), betweenContigEndAndStartPredicate);
-        //
-        // predicates.add(right);
-        //
-        // crit.where(predicates.toArray(new Predicate[predicates.size()]));
-        // crit.distinct(true);
-        // TypedQuery<TranscriptMaps> query = getEntityManager().createQuery(crit).setHint("javax.persistence.fetchgraph",
-        // getEntityManager().getEntityGraph("refseq.TranscriptMaps.includeManyToOnes"));
-        // ret.addAll(query.getResultList());
-        //
-        // } catch (Exception e) {
-        // throw new CANVASDAOException(e);
-        // }
-
         return ret;
     }
 

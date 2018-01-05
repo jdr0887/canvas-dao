@@ -36,6 +36,9 @@ public class TranscriptMapsExons implements Persistable<TranscriptMapsExonsPK> {
     @Transient
     private RegionType regionType = RegionType.EXON;
 
+    @Column(name = "gap")
+    private String gap;
+
     @Column(name = "transcr_start")
     private Integer transcriptStart;
 
@@ -113,6 +116,14 @@ public class TranscriptMapsExons implements Persistable<TranscriptMapsExonsPK> {
         this.contigEnd = contigEnd;
     }
 
+    public String getGap() {
+        return gap;
+    }
+
+    public void setGap(String gap) {
+        this.gap = gap;
+    }
+
     public Range<Integer> getContigRange() {
         return Range.between(this.contigStart, this.contigEnd);
     }
@@ -126,8 +137,8 @@ public class TranscriptMapsExons implements Persistable<TranscriptMapsExonsPK> {
 
     @Override
     public String toString() {
-        return String.format("TranscriptMapsExons [id=%s, transcriptStart=%s, transcriptEnd=%s, contigStart=%s, contigEnd=%s]", id,
-                transcriptStart, transcriptEnd, contigStart, contigEnd);
+        return String.format("TranscriptMapsExons [id=%s, transcriptStart=%s, transcriptEnd=%s, contigStart=%s, contigEnd=%s, gap=%s]", id,
+                transcriptStart, transcriptEnd, contigStart, contigEnd, gap);
     }
 
     @Override

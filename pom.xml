@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.renci.canvas</groupId>
     <artifactId>canvas</artifactId>
-    <version>0.0.23</version>
+    <version>0.0.24</version>
   </parent>
   <name>CANVAS :: DAO</name>
   <modelVersion>4.0.0</modelVersion>

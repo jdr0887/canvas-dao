@@ -2,6 +2,7 @@ package org.renci.canvas.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public interface BaseDAO<T extends Persistable<ID>, ID extends Serializable> {
 
@@ -11,6 +12,6 @@ public interface BaseDAO<T extends Persistable<ID>, ID extends Serializable> {
 
     public abstract ID save(T t) throws CANVASDAOException;
 
-    public abstract List<ID> save(List<T> tList) throws CANVASDAOException;
+    public abstract Set<ID> save(Set<T> tSet) throws CANVASDAOException;
 
 }

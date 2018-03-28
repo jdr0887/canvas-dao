@@ -2,7 +2,9 @@ package org.renci.canvas.dao.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -81,11 +83,10 @@ public abstract class BaseDAOImpl<T extends Persistable<ID>, ID extends Serializ
     }
 
     @Override
-    public synchronized List<ID> save(List<T> entities) throws CANVASDAOException {
-        logger.debug("ENTERING save(List<T>)");
-        List<ID> ret = new ArrayList<>();
-        for (int i = 0; i < entities.size(); i++) {
-            T entity = entities.get(i);
+    public synchronized Set<ID> save(Set<T> entities) throws CANVASDAOException {
+        logger.debug("ENTERING save(Set<T>)");
+        Set<ID> ret = new HashSet<>();
+        for (T entity : entities) {
             if (entity == null) {
                 logger.error("entity is null");
                 return null;
@@ -95,14 +96,12 @@ public abstract class BaseDAOImpl<T extends Persistable<ID>, ID extends Serializ
             } else {
                 getEntityManager().persist(entity);
             }
-
-            if (i % 100 == 0) {
-                logger.debug("flushing batch: {}", i);
+            ret.add(entity.getId());
+            if (ret.size() % 100 == 0) {
+                logger.debug("flushing batch: {}", ret.size());
                 getEntityManager().flush();
                 getEntityManager().clear();
             }
-
-            ret.add(entity.getId());
         }
         getEntityManager().flush();
         getEntityManager().clear();
